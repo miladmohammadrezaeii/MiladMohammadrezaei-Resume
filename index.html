@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milad Mohammadrezaei - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .resume-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #dc143c);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 10px solid #34495e;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+        }
+        
+        .header .title {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .thermal-highlight {
+            color: #dc143c;
+            font-weight: bold;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .left-column {
+            padding-right: 15px;
+        }
+        
+        .right-column {
+            padding-left: 15px;
+            border-left: 2px solid #f0f0f0;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #667eea;
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 25px;
+            height: 2px;
+            background: #764ba2;
+        }
+        
+        .about-text {
+            text-align: justify;
+            line-height: 1.5;
+            color: #555;
+            font-size: 0.85rem;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #dc143c;
+        }
+        
+        .education-item, .experience-item {
+            margin-bottom: 18px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        
+        .thermal-project {
+            border-left: 4px solid #dc143c !important;
+        }
+        
+        .education-item:hover, .experience-item:hover {
+            transform: translateX(3px);
+        }
+        
+        .degree {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+        
+        .institution {
+            color: #667eea;
+            font-weight: 600;
+            margin: 2px 0;
+            font-size: 0.85rem;
+        }
+        
+        .date {
+            color: #7f8c8d;
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+        
+        .gpa {
+            color: #27ae60;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .job-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+        
+        .company {
+            color: #667eea;
+            font-weight: 600;
+            margin: 2px 0;
+            font-size: 0.85rem;
+        }
+        
+        .job-description {
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+        }
+        
+        .skill-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+        
+        .thermal-skill {
+            background: linear-gradient(135deg, #dc143c, #b91372);
+        }
+        
+        .skill-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .publications {
+            font-size: 0.8rem;
+        }
+        
+        .publication-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #27ae60;
+        }
+        
+        .pub-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 2px;
+            font-size: 0.8rem;
+        }
+        
+        .pub-details {
+            color: #666;
+            font-size: 0.7rem;
+        }
+        
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .interest-tag {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            border: 1px solid #bdc3c7;
+        }
+        
+        .thermal-tag {
+            background: #ffe4e4;
+            border: 1px solid #dc143c;
+            color: #dc143c;
+            font-weight: bold;
+        }
+        
+        .project-highlight {
+            background: linear-gradient(135deg, #ffe4e4, #fff0f0);
+            border-left: 4px solid #dc143c !important;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .left-column, .right-column {
+                padding: 0;
+                border: none;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <h1>Milad Mohammadrezaei</h1>
+            <div class="title">Ph.D. in Electrical Engineering - Power Electronics & <span class="thermal-highlight">Thermal Analysis Expert</span></div> & Lithium-ion Battery State Estimation
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>(+98) 9134844336</span>
+                </div>
+                <div class="contact-item">
+                    <span>✉️</span>
+                    <span>m.mohammadrezaei@alumni.iut.ac.ir</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Isfahan, Iran</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-column">
+                <div class="section">
+                    <h2>Professional Summary</h2>
+                    <p class="about-text">
+                        Ph.D. in Electrical Engineering specializing in <strong>data-driven battery state estimation</strong> and <span class="thermal-highlight"><strong>thermal analysis of energy storage systems</strong></span>. Expert in power electronics, machine learning applications, and <span class="thermal-highlight"><strong>thermal management of lithium-ion batteries and power converters using MATLAB and COMSOL Multiphysics</strong></span>. Leading R&D at Niak Energy Golsar, developing solar inverters with advanced thermal design and EV charging technologies.
+                    </p>
+                </div>
+                
+                <div class="section">
+                    <h2>Education</h2>
+                    <div class="education-item">
+                        <div class="degree">Ph.D. in Electrical Engineering</div>
+                        <div class="institution">Isfahan University of Technology</div>
+                        <div class="date">Sep 2018 - Mar 2024</div>
+                        <div class="gpa">GPA: 18.13/20 - Excellent</div>
+                        <div class="job-description">Thesis: Physical Features Extraction for SoH Estimation of Li-ion Batteries</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">M.Sc. in Electrical Engineering</div>
+                        <div class="institution">Isfahan University of Technology</div>
+                        <div class="date">Sep 2016 - Sep 2018</div>
+                        <div class="gpa">GPA: 17.5/20 - Excellent</div>
+                        <div class="job-description">Thesis: Techno-economical Study of Wave Energy Harvesters</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">B.Sc. in Electrical Engineering</div>
+                        <div class="institution">Isfahan University</div>
+                        <div class="date">Sep 2012 - Sep 2016</div>
+                        <div class="gpa">GPA: 15.36/20 - Excellent</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Key Publications</h2>
+                    <div class="publications">
+                        <div class="publication-item">
+                            <div class="pub-title">Framework for Normalizing Physical Features of Li-ion Batteries</div>
+                            <div class="pub-details">IEEE Transactions on Transportation Electrification, 2024</div>
+                        </div>
+                        
+                        <div class="publication-item">
+                            <div class="pub-title">Correlation-based Method for Data-Driven SoH Estimation</div>
+                            <div class="pub-details">Energy Engineering and Management, 2024</div>
+                        </div>
+                        
+                        <div class="publication-item">
+                            <div class="pub-title">Physic-based Feature Extraction in SoH Estimation</div>
+                            <div class="pub-details">Under review - IEEE Transactions on Intelligent Vehicles, 2025</div>
+                        </div>
+                        
+                        <div class="publication-item">
+                            <div class="pub-title">Fully Soft Switched Bidirectional Buck/Boost Converter</div>
+                            <div class="pub-details">Ready for submission - IEEE Transactions on Industrial Electronics, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="section">
+                    <h2>Work Experience</h2>
+                    <div class="experience-item">
+                        <div class="job-title">Head of Research and Development</div>
+                        <div class="company">Niak Energy Golsar</div>
+                        <div class="date">2022 - Present</div>
+                        <div class="job-description">Leading development of grid/off-grid inverters with <span class="thermal-highlight">advanced thermal management</span>, EV charging stations, and BMS systems. Achieved first-time product localization in Iran.</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">R&D Engineer</div>
+                        <div class="company">Golnoor</div>
+                        <div class="date">2021 - 2022</div>
+                        <div class="job-description">Developed off-grid inverters, MPPT/PWM chargers with thermal optimization, and DC-DC converters.</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">University Lecturer & TA</div>
+                        <div class="company">Isfahan University of Technology</div>
+                        <div class="date">2018 - 2024</div>
+                        <div class="job-description">Taught Electrical Machines, Electronics, supervised 200+ students annually.</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Key Projects & Thermal Analysis</h2>
+                    <div class="experience-item project-highlight">
+                        <div class="job-title">🔥 Thermal Analysis of Li-ion & Lead-acid Batteries</div>
+                        <div class="job-description"><span class="thermal-highlight"><strong>MATLAB/COMSOL Multiphysics simulation</strong></span> for portable solar systems. Thermal performance evaluation and heat dissipation optimization.</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">5kW Single-Phase Grid Inverter</div>
+                        <div class="job-description">Heric topology with <span class="thermal-highlight">thermal design optimization</span>, current control, PLL, MPPT - First localization in Iran</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">25kW Three-Phase Grid Inverter</div>
+                        <div class="job-description">T-type topology with <span class="thermal-highlight">advanced heatsink design</span>, PLL implementation</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">Battery Management Systems (BMS)</div>
+                        <div class="job-description">ML-based monitoring with <span class="thermal-highlight">thermal protection algorithms</span> and short-circuit analysis</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Technical Skills</h2>
+                    <div class="skills-grid">
+                        <div class="skill-item thermal-skill">COMSOL</div>
+                        <div class="skill-item">MATLAB</div>
+                        <div class="skill-item thermal-skill">Thermal Analysis</div>
+                        <div class="skill-item">PSIM</div>
+                        <div class="skill-item">ARM/AVR</div>
+                        <div class="skill-item">Python</div>
+                        <div class="skill-item thermal-skill">Heat Transfer</div>
+                        <div class="skill-item">Simulink</div>
+                        <div class="skill-item">DSP</div>
+                        <div class="skill-item">PVsyst</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Research Interests</h2>
+                    <div class="interests">
+                        <div class="interest-tag thermal-tag">🔥 Thermal Analysis</div>
+                        <div class="interest-tag thermal-tag">🔥 Battery Thermal Management</div>
+                        <div class="interest-tag">Li-ion Battery SoH</div>
+                        <div class="interest-tag">Machine Learning</div>
+                        <div class="interest-tag thermal-tag">🔥 Inverter Thermal Design</div>
+                        <div class="interest-tag">Power Electronics</div>
+                        <div class="interest-tag">EV Charging</div>
+                        <div class="interest-tag">DC-DC Converters</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Honors & Achievements</h2>
+                    <div class="experience-item">
+                        <div class="job-title">🏆 1st Rank - Ph.D. Entrance Exam</div>
+                        <div class="job-description">Among 40,000 competitors nationwide (2018)</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">🎯 Product Localization Pioneer</div>
+                        <div class="job-description">First-time grid inverter localization & certification in Iran</div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-title">📚 Direct Ph.D. Admission</div>
+                        <div class="job-description">Excellence reward for Master's performance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
