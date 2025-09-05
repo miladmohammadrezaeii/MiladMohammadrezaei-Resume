@@ -1,316 +1,582 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Milad Mohammadrezaei — Resume</title>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>CV — Milad Mohammadrezaei (Ph.D., Power Electronics)</title>
+  <meta name="description" content="Academic CV — Power Electronics, Li-ion battery SoH estimation, ML for power electronics, EV charging, converters" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Sen:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <style>
     :root{
-      --bg: #0b1020;              /* page background */
-      --card: #0f172a;             /* card base */
-      --card-2: #111827;           /* subtle contrast */
-      --ink: #e5e7eb;              /* primary text */
-      --ink-dim: #c7cbd3;          /* secondary text */
-      --brand-1: #6366f1;          /* indigo */
-      --brand-2: #a855f7;          /* violet */
-      --accent: #f43f5e;           /* rose for thermal */
-      --ok: #22c55e;               /* success */
-      --muted: #1f2937;            /* borders */
-      --chip: #0b1226;             /* skill chip bg */
-      --shadow: 0 30px 80px rgba(0,0,0,.35);
+      --bg:#0c0e13; --panel:#12141b; --glass:rgba(18,20,27,.6);
+      --text:#e8edf5; --muted:#a8b1c0; --line:#242836; --ring:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+      --brand-1:#8a1538; --brand-2:#c42d5a;
+      --accent-profile:#7dd3fc; --accent-edu:#a78bfa; --accent-pub:#fb7185;
+      --accent-re:#34d399; --accent-ind:#f59e0b; --accent-hon:#f472b6;
+      --accent-skill:#60a5fa; --accent-ref:#fca5a5;
+      --link:#8ab4ff; --sidebar-w:320px; --radius:16px; --ease:cubic-bezier(.2,.7,.2,1);
+    }
+    [data-theme="light"]{
+      --bg:#f6f8fc; --panel:#ffffff; --glass:rgba(255,255,255,.7);
+      --text:#0e1320; --muted:#5b6575; --line:#e7ebf3; --ring:rgba(16,24,40,.07);
+      --shadow:0 10px 30px rgba(16,24,40,.12); --link:#2b72ff;
+    }
+    [data-palette="ocean"]{
+      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9; --accent-re:#14b8a6;
+      --accent-ind:#06b6d4; --accent-hon:#67e8f9; --accent-skill:#60a5fa; --accent-ref:#93c5fd;
+    }
+    [data-palette="aurora"]{
+      --accent-profile:#34d399; --accent-edu:#a3e635; --accent-pub:#f43f5e; --accent-re:#22c55e;
+      --accent-ind:#f59e0b; --accent-hon:#e879f9; --accent-skill:#4ade80; --accent-ref:#fb923c;
+    }
+    [data-palette="solar"]{
+      --accent-profile:#fde047; --accent-edu:#fbbf24; --accent-pub:#fb7185; --accent-re:#84cc16;
+      --accent-ind:#f59e0b; --accent-hon:#f472b6; --accent-skill:#fcd34d; --accent-ref:#fca5a5;
     }
 
-    /* --- Reset / base --- */
-    *, *::before, *::after{ box-sizing: border-box }
-    html, body{ height: 100% }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    html{scroll-behavior:smooth}
     body{
-      margin:0; color: var(--ink); background: radial-gradient(1200px 800px at 10% 10%, #1b2552 0%, transparent 60%),
-                                       radial-gradient(1000px 700px at 90% 20%, #3b1f52 0%, transparent 60%),
-                                       linear-gradient(120deg, #0b0f1f, #0b1020 35%, #0b0f1f 100%);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      padding: 32px; 
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 110% -10%, rgba(196,45,90,.15), transparent 60%),
+        radial-gradient(900px 600px at -10% 110%, rgba(122,18,50,.18), transparent 60%),
+        var(--bg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      line-height:1.65;
     }
 
-    .container{
-      max-width: 1080px; margin: auto; position: relative;
+    .layout{display:grid; grid-template-columns: var(--sidebar-w) 1fr; min-height:100dvh}
+    @media (max-width: 980px){
+      :root{ --sidebar-w: 100% } .layout{grid-template-columns:1fr}
+      .sidebar{position:static;height:auto}
+      .main{padding:18px}
     }
 
-    /* Decorative gradient ring */
-    .ring{ position:absolute; inset:-2px; border-radius:28px; padding:2px; background:
-      conic-gradient(from 180deg at 50% 50%, var(--brand-1), var(--brand-2), var(--accent), var(--brand-1));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude; filter: blur(.5px); opacity:.9;
+    /* Sidebar */
+    .sidebar{
+      position: sticky; top:0; height:100dvh; overflow:auto;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, var(--glass), rgba(0,0,0,0));
+      border-right:1px solid var(--line); box-shadow: var(--shadow); padding:18px;
+    }
+    .brand{display:flex; align-items:center; gap:12px; margin-bottom:12px}
+    .avatar{
+      width:64px; height:64px; border-radius:18px; overflow:hidden; border:1px solid var(--ring);
+      background: linear-gradient(135deg,#1d2230,#0f1118); display:grid; place-items:center; color:#fff; font:800 1rem Sen, Inter, sans-serif;
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+    .name{margin:0; font:800 1.28rem/1.2 Sen, Inter, sans-serif}
+    .role{margin:2px 0 0; color:var(--muted); font-weight:700}
+
+    .nav{display:flex; flex-direction:column; gap:8px; margin:10px 0 16px}
+    .tab{
+      padding:10px 12px; border-radius:12px; text-decoration:none; color:var(--muted); border:1px solid transparent;
+      font-weight:800; display:flex; align-items:center; gap:10px; transition: background .2s, border-color .2s, color .2s;
+    }
+    .tab:hover{color:var(--text); border-color:var(--line)}
+    .tab.active{color:var(--text); border-color:var(--brand-2); background:rgba(196,45,90,.12)}
+    [data-theme="light"] .tab.active{background:rgba(122,18,50,.08)}
+
+    .side-sec{margin: 16px 0}
+    .side-sec h3{margin:.2rem 0 8px; font:800 0.95rem/1.2 Sen, Inter, sans-serif}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      padding:6px 10px; border:1px solid var(--line); border-radius:999px; font-weight:800; font-size:.88rem;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      cursor:pointer;
+    }
+    .palette{display:flex; gap:8px; margin-top:8px}
+    .swatch{width:36px; height:28px; border-radius:8px; border:1px solid var(--line); cursor:pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.05)}
+    .swatch[data-p="classic"]{ background: linear-gradient(90deg,#7dd3fc,#a78bfa,#fb7185) }
+    .swatch[data-p="ocean"]{ background: linear-gradient(90deg,#22d3ee,#0ea5e9,#14b8a6) }
+    .swatch[data-p="aurora"]{ background: linear-gradient(90deg,#34d399,#a3e635,#f43f5e) }
+    .swatch[data-p="solar"]{   background: linear-gradient(90deg,#fde047,#f59e0b,#fb7185) }
+    .foot-note{color:var(--muted); font-size:.9rem; border-top:1px dashed var(--line); padding-top:8px; margin-top:14px}
+
+    /* Main */
+    .main{padding:26px 26px 100px; max-width:980px; width:100%; margin:0 auto}
+    .section{
+      position:relative; border:1px solid var(--line); border-radius: var(--radius); padding:16px 16px 18px;
+      margin-bottom:18px; background: var(--panel); box-shadow: var(--shadow); overflow:hidden;
+    }
+    .section::before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background: linear-gradient(90deg, var(--brand-1), var(--brand-2)); opacity:.28}
+    .section[data-accent]::before{background: linear-gradient(90deg, var(--accent-color), transparent 70%); opacity:.9}
+    .section h2{display:flex; align-items:center; gap:10px; margin:.2rem 0 8px; font:800 1.06rem/1.2 Sen, Inter, sans-serif; letter-spacing:.2px}
+    .meta{color:var(--muted); font-weight:600}
+    .bullets{margin:8px 0 0; padding-left:18px} .bullets li{margin:6px 0}
+
+    #profile  { --accent-color: var(--accent-profile) }
+    #education{ --accent-color: var(--accent-edu) }
+    #publications{ --accent-color: var(--accent-pub) }
+    #research-teaching{ --accent-color: var(--accent-re) }
+    #industry{ --accent-color: var(--accent-ind) }
+    #honors{ --accent-color: var(--accent-hon) }
+    #skills{ --accent-color: var(--accent-skill) }
+    #references{ --accent-color: var(--accent-ref) }
+
+    .slogan{margin:0;color:var(--muted);font-weight:700}
+    .callout{margin:8px 0 0; padding:12px; border-radius:12px; border:1px dashed var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), transparent)}
+
+    .toolbar{display:flex; gap:8px; margin:8px 0 6px; flex-wrap:wrap}
+    .btn{padding:8px 12px; border-radius:12px; border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)); color:var(--text);
+      text-decoration:none; font-weight:800; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s, background .2s}
+    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 20px var(--ring); border-color:var(--brand-2)}
+    details.pub{border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:8px 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), transparent); transition: border-color .2s}
+    details.pub[open]{border-color: var(--accent-pub)}
+    summary{list-style:none; display:flex; gap:12px; align-items:flex-start; cursor:pointer}
+    summary::-webkit-details-marker{display:none}
+    .p-title{font-weight:800} .p-where{color:var(--muted); font-weight:800}
+    .p-year{margin-left:auto; color:var(--muted); font-weight:800}
+    .divider{height:1px;background:var(--line);margin:8px 0}
+    .kbd{font:800 .82rem ui-monospace; border:1px solid var(--line); border-radius:8px; padding:2px 8px; color:var(--muted)}
+    .sumbox{border:1px dashed var(--line); border-radius:10px; padding:10px; margin-top:8px; background:linear-gradient(180deg, rgba(255,255,255,.015), transparent)}
+
+    .progress{position:absolute; bottom:0; left:0; height:3px; width:0%; background: linear-gradient(90deg, var(--accent-color), transparent 80%); transition: width .15s var(--ease)}
+    a{color:var(--link); text-decoration:none} a:hover{text-decoration:underline}
+
+    /* Floating Dock */
+    .dock{
+      position: fixed; right: 22px; bottom: 18px; display: flex; gap: 10px; align-items:center;
+      background: rgba(0,0,0,.18); border:1px solid var(--line); backdrop-filter: blur(10px);
+      border-radius: 999px; padding: 8px; box-shadow: var(--shadow); z-index: 999;
+    }
+    [data-theme="light"] .dock{background: rgba(255,255,255,.7)}
+    .dock .fab{
+      border:1px solid var(--line); border-radius: 999px; height:44px; padding:0 14px;
+      display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      cursor:pointer; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s;
+    }
+    .dock .fab:hover{transform:translateY(-2px); box-shadow:0 10px 20px var(--ring); border-color:var(--brand-2)}
+    .dock .fab.brand{background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); border-color: transparent; color:#fff}
+    .dock .tooltip{
+      position:absolute; bottom:58px; transform: translateX(-50%); background:#000; color:#fff;
+      font-size:.8rem; padding:6px 8px; border-radius:8px; opacity:0; pointer-events:none; transition: opacity .15s var(--ease)
+    }
+    .dock .fab:hover .tooltip{opacity:.9}
+    @media (max-width: 640px){
+      .dock{left:50%; right:auto; transform: translateX(-50%);}
+      .dock .fab span{display:none}
     }
 
-    .card{
-      position: relative; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
-      backdrop-filter: blur(8px); box-shadow: var(--shadow);
-      overflow: hidden; isolation: isolate;
-    }
-
-    /* Header */
-    .header{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 28px; padding: 40px 42px 28px; background:
-      radial-gradient(600px 280px at -10% -10%, rgba(99,102,241,.25), transparent 65%),
-      radial-gradient(500px 260px at 110% -10%, rgba(168,85,247,.25), transparent 65%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00));
-    }
-    @media (max-width: 860px){ .header{ grid-template-columns: 1fr; padding: 32px 28px 20px } }
-
-    .name{ font: 700 40px/1.15 "Playfair Display", serif; letter-spacing:.2px }
-    .role{ margin-top:10px; font-weight:500; color: var(--ink-dim) }
-    .role strong{ color: #fff }
-    .badge{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-size:.78rem; font-weight:600;
-      background: linear-gradient(90deg, rgba(99,102,241,.22), rgba(168,85,247,.22)); border:1px solid rgba(148,163,184,.18);
-    }
-    .badge .dot{ width:8px; height:8px; border-radius:50%; background: var(--accent); box-shadow:0 0 12px rgba(244,63,94,.7) }
-
-    .contacts{ display:flex; flex-wrap:wrap; gap:12px 18px; margin-top:18px }
-    .contact{ display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:12px; background: #0e1328; border:1px solid #1b2446; color:#cfd5e6; font-size:.9rem }
-    .contact svg{ width:16px; height:16px; opacity:.9; flex:none }
-
-    /* Layout body */
-    .body{ display:grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 42px 40px }
-    @media (max-width: 1024px){ .body{ grid-template-columns: 1fr; padding: 0 28px 32px } }
-
-    /* Section */
-    section{ margin-top: 28px }
-    .h2{ font-weight:700; letter-spacing:.2px; font-size:1.15rem; margin-bottom:14px; display:flex; align-items:center; gap:10px }
-    .h2 .rule{ flex:1; height:2px; background: linear-gradient(90deg, #3b82f6 0, #a855f7 45%, transparent 100%); border-radius:2px }
-
-    .cardlet{ background: #0d142d; border:1px solid #1b2446; border-radius:16px; padding:14px 16px; margin-bottom:12px; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease }
-    .cardlet:hover{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.25); border-color:#2b3a71 }
-
-    .kicker{ color:#9aa3b2; font-weight:600; font-size:.84rem }
-    .emph{ color:#dbe1ff; font-weight:600 }
-    .dim{ color:#9aa3b2 }
-    .date{ font-size:.8rem; color:#9aa3b2; font-style: italic }
-    .gpa{ color: var(--ok); font-weight:700; font-size:.8rem }
-
-    .summary{ background: #0b1226; border:1px solid #1b2446; border-radius:16px; padding:16px 18px; color:#d0d6e6 }
-    .summary strong{ color:#fff }
-    .summary .hot{ color: var(--accent); font-weight:700 }
-
-    /* Skills */
-    .skills{ display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px }
-    .chip{ background: linear-gradient(180deg, #0b1226, #0f1731); border:1px solid #1b2446; border-radius:14px; padding:8px 10px; text-align:center; font-weight:600; font-size:.8rem }
-    .chip.thermal{ border-color: rgba(244,63,94,.5); box-shadow: inset 0 0 0 1px rgba(244,63,94,.35) }
-
-    /* Timeline style for experience & education */
-    .timeline{ position:relative; padding-left:22px }
-    .timeline::before{ content:""; position:absolute; left:7px; top:6px; bottom:6px; width:2px; background: linear-gradient(180deg, rgba(99,102,241,.6), rgba(168,85,247,.2)) }
-    .tl-item{ position:relative; margin: 0 0 14px 0 }
-    .tl-item::before{ content:""; position:absolute; left:-5px; top:10px; width:10px; height:10px; border-radius:50%; background: #93c5fd; box-shadow:0 0 0 3px rgba(99,102,241,.18) }
-
-    /* Interests */
-    .tags{ display:flex; flex-wrap:wrap; gap:8px }
-    .tag{ padding:6px 10px; border-radius:999px; font-size:.78rem; border:1px solid #26335f; background:#0b1226 }
-    .tag.hot{ border-color: rgba(244,63,94,.6); color:#ffd7df }
-
-    /* Publications */
-    .pub{ display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center }
-    .pub .title{ font-weight:600 }
-    .pub .venue{ font-size:.82rem; color:#9aa3b2 }
-
-    /* Print (A4) */
-    @media print{
-      :root{ --bg:#fff; --card:#fff; --ink:#111; --ink-dim:#334155; }
-      body{ background:#fff; padding:0 }
-      .ring{ display:none }
-      .card{ box-shadow:none; border: 1px solid #e5e7eb }
-      .header{ background:#ffffff; color:#111 }
-      .contact{ background:#f8fafc; border-color:#e5e7eb; color:#111 }
-      .body{ padding: 0 24px 24px }
-      .summary, .cardlet{ background:#fff; border-color:#e5e7eb; color:#111 }
-    }
+    @media print{ .dock{display:none} .sidebar{display:none} .main{padding:0} .section{box-shadow:none; page-break-inside: avoid} a{color:#000; text-decoration:none} body{background:#fff} }
   </style>
 </head>
-<body>
-  <main class="container">
-    <div class="ring" aria-hidden="true"></div>
-    <article class="card" role="document" aria-label="Resume">
-      <!-- Header -->
-      <header class="header">
+<body data-theme="dark" data-palette="classic">
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="avatar" title="Google Scholar photo">
+          <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=4nlG_hYAAAAJ" alt="Scholar Photo" onerror="this.style.display='none'; this.parentElement.textContent='MM'">
+        </div>
         <div>
           <h1 class="name">Milad Mohammadrezaei</h1>
-          <p class="role">Ph.D. in Electrical Engineering — Power Electronics • <strong>Thermal Analysis</strong> • Lithium‑ion Battery State Estimation</p>
-          <div style="margin-top:12px"><span class="badge"><span class="dot"></span> Open to R&D leadership & advanced thermal design roles</span></div>
-          <div class="contacts" aria-label="Contact">
-            <div class="contact" title="Phone"> 
-              <!-- phone icon -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.11 2h2a2 2 0 0 1 2 1.72c.12.9.31 1.77.57 2.61a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.47-1.14a2 2 0 0 1 2.11-.45c.84.26 1.71.45 2.61.57A2 2 0 0 1 22 16.92Z"/></svg>
-              (+98) 9134844336
-            </div>
-            <div class="contact" title="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="m22 6-10 7L2 6"/></svg>
-              m.mohammadrezaei@alumni.iut.ac.ir
-            </div>
-            <div class="contact" title="Location">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              Isfahan, Iran
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="summary">
-            <p>Ph.D. specializing in <strong>data‑driven battery state estimation</strong> and <span class="hot">thermal analysis of energy storage systems</span>. Expert in power electronics, ML applications, and <span class="hot">thermal management of Li‑ion batteries and power converters</span> using MATLAB & COMSOL. Leading R&D at Niak Energy Golsar, building solar inverters with advanced thermal design and EV charging technologies.</p>
-          </div>
-        </div>
-      </header>
-
-      <!-- Body -->
-      <div class="body">
-        <!-- Left column -->
-        <div>
-          <section>
-            <div class="h2">Education <span class="rule" aria-hidden="true"></span></div>
-            <div class="timeline">
-              <div class="tl-item cardlet">
-                <div class="kicker">Ph.D. in Electrical Engineering <span class="gpa">GPA 18.13/20 — Excellent</span></div>
-                <div class="emph">Isfahan University of Technology</div>
-                <div class="date">Sep 2018 — Mar 2024</div>
-                <div class="dim">Thesis: Physical Features Extraction for SoH Estimation of Li‑ion Batteries</div>
-              </div>
-              <div class="tl-item cardlet">
-                <div class="kicker">M.Sc. in Electrical Engineering <span class="gpa">GPA 17.5/20 — Excellent</span></div>
-                <div class="emph">Isfahan University of Technology</div>
-                <div class="date">Sep 2016 — Sep 2018</div>
-                <div class="dim">Thesis: Techno‑economical Study of Wave Energy Harvesters</div>
-              </div>
-              <div class="tl-item cardlet">
-                <div class="kicker">B.Sc. in Electrical Engineering <span class="gpa">GPA 15.36/20 — Excellent</span></div>
-                <div class="emph">Isfahan University</div>
-                <div class="date">Sep 2012 — Sep 2016</div>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <div class="h2">Key Publications <span class="rule" aria-hidden="true"></span></div>
-            <div class="cardlet pub">
-              <div>
-                <div class="title">Framework for Normalizing Physical Features of Li‑ion Batteries</div>
-                <div class="venue">IEEE Transactions on Transportation Electrification, 2024</div>
-              </div>
-            </div>
-            <div class="cardlet pub">
-              <div>
-                <div class="title">Correlation‑based Method for Data‑Driven SoH Estimation</div>
-                <div class="venue">Energy Engineering and Management, 2024</div>
-              </div>
-            </div>
-            <div class="cardlet pub">
-              <div>
-                <div class="title">Physic‑based Feature Extraction in SoH Estimation</div>
-                <div class="venue">Under review — IEEE Transactions on Intelligent Vehicles, 2025</div>
-              </div>
-            </div>
-            <div class="cardlet pub">
-              <div>
-                <div class="title">Fully Soft‑Switched Bidirectional Buck/Boost Converter</div>
-                <div class="venue">Ready for submission — IEEE T-IE, 2025</div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Right column -->
-        <div>
-          <section>
-            <div class="h2">Work Experience <span class="rule" aria-hidden="true"></span></div>
-            <div class="timeline">
-              <div class="tl-item cardlet">
-                <div class="kicker">Head of Research & Development</div>
-                <div class="emph">Niak Energy Golsar</div>
-                <div class="date">2022 — Present</div>
-                <div class="dim">Leading development of grid/off‑grid inverters with <span class="hot">advanced thermal management</span>, EV charging stations, and BMS systems; delivered first‑time product localization in Iran.</div>
-              </div>
-              <div class="tl-item cardlet">
-                <div class="kicker">R&D Engineer</div>
-                <div class="emph">Golnoor</div>
-                <div class="date">2021 — 2022</div>
-                <div class="dim">Developed off‑grid inverters, MPPT/PWM chargers with thermal optimization, and DC‑DC converters.</div>
-              </div>
-              <div class="tl-item cardlet">
-                <div class="kicker">University Lecturer & TA</div>
-                <div class="emph">Isfahan University of Technology</div>
-                <div class="date">2018 — 2024</div>
-                <div class="dim">Taught Electrical Machines, Electronics, and supervised 200+ students annually.</div>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <div class="h2">Key Projects & Thermal Analysis <span class="rule" aria-hidden="true"></span></div>
-            <div class="cardlet" style="border-color: rgba(244,63,94,.6)">
-              <div class="kicker">Thermal Analysis of Li‑ion & Lead‑acid Batteries</div>
-              <div class="dim">MATLAB/COMSOL Multiphysics simulations for portable solar systems; thermal performance evaluation and heat‑dissipation optimization.</div>
-            </div>
-            <div class="cardlet">
-              <div class="kicker">5kW Single‑Phase Grid Inverter</div>
-              <div class="dim">HERIC topology with <span class="hot">thermal design optimization</span>, current control, PLL, MPPT — first localization in Iran.</div>
-            </div>
-            <div class="cardlet">
-              <div class="kicker">25kW Three‑Phase Grid Inverter</div>
-              <div class="dim">T‑type topology with <span class="hot">advanced heatsink design</span> and PLL implementation.</div>
-            </div>
-            <div class="cardlet">
-              <div class="kicker">Battery Management Systems (BMS)</div>
-              <div class="dim">ML‑based monitoring with <span class="hot">thermal protection algorithms</span> and short‑circuit analysis.</div>
-            </div>
-          </section>
-
-          <section>
-            <div class="h2">Technical Skills <span class="rule" aria-hidden="true"></span></div>
-            <div class="skills">
-              <div class="chip thermal">COMSOL</div>
-              <div class="chip">MATLAB</div>
-              <div class="chip thermal">Thermal Analysis</div>
-              <div class="chip">PSIM</div>
-              <div class="chip">ARM/AVR</div>
-              <div class="chip">Python</div>
-              <div class="chip thermal">Heat Transfer</div>
-              <div class="chip">Simulink</div>
-              <div class="chip">DSP</div>
-              <div class="chip">PVsyst</div>
-            </div>
-          </section>
-
-          <section>
-            <div class="h2">Research Interests <span class="rule" aria-hidden="true"></span></div>
-            <div class="tags">
-              <span class="tag hot">Thermal Analysis</span>
-              <span class="tag hot">Battery Thermal Management</span>
-              <span class="tag">Li‑ion Battery SoH</span>
-              <span class="tag">Machine Learning</span>
-              <span class="tag hot">Inverter Thermal Design</span>
-              <span class="tag">Power Electronics</span>
-              <span class="tag">EV Charging</span>
-              <span class="tag">DC‑DC Converters</span>
-            </div>
-          </section>
-
-          <section>
-            <div class="h2">Honors & Achievements <span class="rule" aria-hidden="true"></span></div>
-            <div class="cardlet">
-              <div class="kicker">1st Rank — Ph.D. Entrance Exam</div>
-              <div class="dim">Among 40,000 competitors nationwide (2018)</div>
-            </div>
-            <div class="cardlet">
-              <div class="kicker">Product Localization Pioneer</div>
-              <div class="dim">First‑time grid inverter localization & certification in Iran</div>
-            </div>
-            <div class="cardlet">
-              <div class="kicker">Direct Ph.D. Admission</div>
-              <div class="dim">Excellence reward for Master's performance</div>
-            </div>
-          </section>
+          <div class="role">Ph.D. — Power Electronics</div>
         </div>
       </div>
-    </article>
-  </main>
+
+      <!-- Side navigation -->
+      <nav class="nav" id="sidenav">
+        <a class="tab active" href="#profile"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
+        <a class="tab" href="#education"><i class="fa-solid fa-graduation-cap"></i> <span>Education</span></a>
+        <a class="tab" href="#publications"><i class="fa-regular fa-file-lines"></i> <span>Publications</span></a>
+        <a class="tab" href="#research-teaching"><i class="fa-solid fa-chalkboard-user"></i> <span>Research & Teaching</span></a>
+        <a class="tab" href="#industry"><i class="fa-solid fa-industry"></i> <span>Industry</span></a>
+        <a class="tab" href="#honors"><i class="fa-solid fa-medal"></i> <span>Honors</span></a>
+        <a class="tab" href="#skills"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Skills</span></a>
+        <a class="tab" href="#references"><i class="fa-solid fa-people-group"></i> <span>References</span></a>
+      </nav>
+
+      <div class="side-sec">
+        <h3>Research Interests</h3>
+        <div class="chips">
+          <span class="chip">Battery SoH/SoC</span><span class="chip">ML & Diagnostics</span>
+          <span class="chip">Converter Reliability</span><span class="chip">Bidirectional DC–DC</span>
+          <span class="chip">Thermal Modeling</span><span class="chip">EV Charging / Grid-tied</span>
+        </div>
+      </div>
+
+      <div class="side-sec">
+        <h3>Accent Palette</h3>
+        <div class="palette">
+          <div class="swatch" data-p="classic" title="Classic"></div>
+          <div class="swatch" data-p="ocean" title="Ocean"></div>
+          <div class="swatch" data-p="aurora" title="Aurora"></div>
+          <div class="swatch" data-p="solar" title="Solar"></div>
+        </div>
+      </div>
+
+      <div class="foot-note">© <span id="y"></span> Milad Mohammadrezaei</div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- Profile -->
+      <section class="section" id="profile" data-accent>
+        <h2><i class="fa-solid fa-user-astronaut" style="color:var(--accent-profile)"></i> Profile</h2>
+        <p class="slogan">
+          Doctoral researcher in <strong>Li-ion battery SoH</strong>, <strong>ML for power electronics</strong>, and <strong>EV charging/grid-tied inverters</strong>.
+          Published in <em>IEEE TTE</em> and other journals; bridging theory and real-world applications.
+        </p>
+        <div class="callout"><strong>Highlights:</strong> feature engineering for generic SoH models, correlation-based EV diagnostics, thermal-aware converter design.</div>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Education -->
+      <section class="section" id="education" data-accent>
+        <h2><i class="fa-solid fa-graduation-cap" style="color:var(--accent-edu)"></i> Education</h2>
+
+        <div class="card">
+          <h3>Ph.D., Electrical Engineering (Power Electronics)</h3>
+          <div class="meta">Isfahan University of Technology • 2018–2024</div>
+          <ul class="bullets">
+            <li>GPA: 18.13/20</li><li>Thesis: Physical Features Extraction for Online SoH Estimation of Li-ion Batteries (Data-Driven)</li>
+            <li>Supervisors: Dr. A. Tabesh, Dr. Z. Maleki • Advisor: Dr. S. A. Khajehoddin</li>
+          </ul>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="phd">Abstract</button>
+            <p class="sum" data-sum="phd" style="display:none">Proposes a feature-engineering pipeline to normalize physical indicators across Li-ion cells, enabling generic online SoH estimation under partial cycling and noisy EV-like profiles.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>M.Sc., Electrical Engineering (Power Systems)</h3>
+          <div class="meta">Isfahan University of Technology • 2016–2018</div>
+          <ul class="bullets">
+            <li>GPA: 17.5/20</li>
+            <li>Thesis: Techno-economic Study of Collector Systems for Buoy Wave Energy Harvesters (Persian Gulf)</li>
+          </ul>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="msc">Abstract</button>
+            <p class="sum" data-sum="msc" style="display:none">Compares collector layouts and grid interfaces for wave point absorbers; evaluates CAPEX/OPEX to identify optimal farm configurations.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>B.Sc., Electrical Engineering</h3>
+          <div class="meta">Isfahan University • 2012–2016</div>
+          <ul class="bullets">
+            <li>GPA: 15.36/20</li><li>Thesis: Control Algorithms in Wind–Solar Hybrid Systems</li>
+          </ul>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Publications -->
+      <section class="section" id="publications" data-accent>
+        <h2><i class="fa-regular fa-file-lines" style="color:var(--accent-pub)"></i> Publications</h2>
+        <div class="toolbar">
+          <button class="btn" id="expandAll"><i class="fa-solid fa-plus"></i> Expand all</button>
+          <button class="btn" id="collapseAll"><i class="fa-solid fa-minus"></i> Collapse all</button>
+        </div>
+
+        <details class="pub">
+          <summary>
+            <div>
+              <div class="p-title">A Correlation-based Method for the Estimation of the SoH of Lithium Batteries in EVs</div>
+              <div class="p-where">Energy Engineering and Management</div>
+            </div>
+            <div class="p-year">2025</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh</div>
+          <p class="meta">Correlation-based, data-driven SoH estimation tailored to EV usage.</p>
+          <span class="kbd">peer-reviewed</span>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="pub1">Abstract</button>
+            <p class="sum" data-sum="pub1" style="display:none">Introduces correlation features extracted from partial charge/discharge segments to robustly infer SoH under realistic EV profiles.</p>
+          </div>
+        </details>
+
+        <details class="pub">
+          <summary>
+            <div>
+              <div class="p-title">A Framework for Normalizing Physical Features of Li-ion Batteries</div>
+              <div class="p-where">IEEE Transactions on Transportation Electrification</div>
+            </div>
+            <div class="p-year">2024</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh, S. A. Khajehoddin</div>
+          <p class="meta">Feature normalization enabling generic SoH models across cells/packs.</p>
+          <span class="kbd">peer-reviewed</span>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="pub2">Abstract</button>
+            <p class="sum" data-sum="pub2" style="display:none">Proposes cross-cell normalization of physical indicators to form transferable SoH models without per-cell retraining.</p>
+          </div>
+        </details>
+
+        <details class="pub">
+          <summary>
+            <div>
+              <div class="p-title">Correlation-based Data-Driven SoH Estimation in EVs</div>
+              <div class="p-where">Energy Engineering and Management</div>
+            </div>
+            <div class="p-year">2024</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh</div>
+          <p class="meta">Field-like profiles; correlation features for practical SoH diagnostics.</p>
+          <span class="kbd">peer-reviewed</span>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="pub3">Abstract</button>
+            <p class="sum" data-sum="pub3" style="display:none">Validates correlation metrics as lightweight indicators for SoH under noisy measurement and varying drive cycles.</p>
+          </div>
+        </details>
+
+        <h3 style="margin-top:8px">Under Review / In Preparation</h3>
+
+        <details class="pub">
+          <summary>
+            <div><div class="p-title">Physic-based Feature Extraction for SoH with Partial Patterns</div>
+              <div class="p-where">under review — IEEE Transactions on Intelligent Vehicles</div></div>
+            <div class="p-year">2025</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, Z. Maleki, S. A. Khajehoddin</div>
+          <div class="sumbox">
+            <button class="chip summary-toggle" data-target="pub4">Abstract</button>
+            <p class="sum" data-sum="pub4" style="display:none">Physics-guided features resilient to partial charging/discharging data gaps for SoH estimation.</p>
+          </div>
+        </details>
+
+        <details class="pub">
+          <summary>
+            <div><div class="p-title">Online Simultaneous Estimation of SoH and Internal Parameters</div>
+              <div class="p-where">under review — IEEE Transactions on Transportation Electrification</div></div>
+            <div class="p-year">2025</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, Z. Maleki, S. A. Khajehoddin</div>
+        </details>
+
+        <details class="pub">
+          <summary>
+            <div><div class="p-title">Fully Soft-Switched High Step-up/Down Bidirectional Buck–Boost Converter</div>
+              <div class="p-where">ready for submission — IEEE Transactions on Industrial Electronics</div></div>
+            <div class="p-year">2025</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, H. Farzanehfard</div>
+        </details>
+
+        <details class="pub">
+          <summary>
+            <div><div class="p-title">Designing the Best Configuration for Wave Point Absorber Farms</div>
+              <div class="p-where">in preparation</div></div>
+            <div class="p-year">—</div>
+          </summary>
+          <div class="divider"></div>
+          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, A. Zamani</div>
+        </details>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Research & Teaching -->
+      <section class="section" id="research-teaching" data-accent>
+        <h2><i class="fa-solid fa-chalkboard-user" style="color:var(--accent-re)"></i> Research & Teaching</h2>
+        <div class="card">
+          <h3>Research Assistant <span class="meta">• 2024–Now</span></h3>
+          <div class="meta">Isfahan University of Technology</div>
+          <ul class="bullets"><li>DC–DC converters (Prof. H. Farzanehfard); loss models & soft-switching guidelines.</li></ul>
+        </div>
+        <div class="card">
+          <h3>University Lecturer <span class="meta">• 2018–2024</span></h3>
+          <div class="meta">Isfahan University of Technology; Isfahan University</div>
+          <ul class="bullets"><li>Taught Fundamentals of EE, Electrical Circuits; exam & problem-set design.</li></ul>
+        </div>
+        <div class="card">
+          <h3>Lab Instructor <span class="meta">• 2018–2023</span></h3>
+          <div class="meta">Isfahan University of Technology</div>
+          <ul class="bullets"><li>Electrical Machines Lab (&gt;50 students/year); lab manuals; safety standards.</li></ul>
+        </div>
+        <div class="card">
+          <h3>Teaching Assistant <span class="meta">• 2017–2020</span></h3>
+          <div class="meta">Isfahan University of Technology</div>
+          <ul class="bullets"><li>Electrical Machines I/II (Dr. Tabesh, Dr. Golsorkhi, Dr. Hajian); recitations, grading.</li></ul>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Industry -->
+      <section class="section" id="industry" data-accent>
+        <h2><i class="fa-solid fa-industry" style="color:var(--accent-ind)"></i> Industry</h2>
+        <div class="card">
+          <h3>Head of R&D <span class="meta">• 2022–Now</span></h3>
+          <div class="meta">Niak Energy Golsar</div>
+          <ul class="bullets">
+            <li>Designed <strong>5 kW grid-tied inverter</strong> (HERIC, PLL, MPPT); product localization & certification.</li>
+            <li>Led <strong>25 kW three-phase T-type inverter</strong>; validation and compliance.</li>
+            <li>ML-based <strong>battery monitoring app</strong> for safety diagnostics.</li>
+            <li>Thermal analysis (MATLAB/COMSOL) for portable PV systems.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>R&D Engineer <span class="meta">• 2021–2022</span></h3>
+          <div class="meta">Golnoor</div>
+          <ul class="bullets"><li><strong>1 kW off-grid inverter</strong> (H-bridge, MPPT, boost) with closed-loop control; prototype → pilot.</li></ul>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Honors -->
+      <section class="section" id="honors" data-accent>
+        <h2><i class="fa-solid fa-medal" style="color:var(--accent-hon)"></i> Honors & Awards</h2>
+        <ul class="bullets" style="margin:0">
+          <li>Direct Ph.D. admission as reward for Master’s rank (2018)</li>
+          <li><strong>1st</strong> among 40,000 — National Ph.D. Entrance Exam (2018)</li>
+          <li><strong>82nd</strong> among 50,000 — National M.Sc. Entrance Exam (2016)</li>
+          <li>Top 5% — National University Entrance (Konkour, 2012)</li>
+        </ul>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section" id="skills" data-accent>
+        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent-skill)"></i> Skills</h2>
+        <p style="margin:0">
+          <strong>Programming:</strong> MATLAB; ARM/AVR/Arduino; DSP; Python (familiar); Verilog/FPGA (familiar); PSpice (familiar).<br/>
+          <strong>Simulation:</strong> Simulink; PSIM; COMSOL Multiphysics.<br/>
+          <strong>Writing & Presentation:</strong> LaTeX; MS Word, Visio, Excel, PowerPoint.<br/>
+          <strong>Languages:</strong> Persian (Native); English (Fluent).
+        </p>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <!-- References -->
+      <section class="section" id="references" data-accent>
+        <h2><i class="fa-solid fa-people-group" style="color:var(--accent-ref)"></i> References</h2>
+        <ul class="bullets" style="margin:0">
+          <li>Dr. Ahmadreza Tabesh — Isfahan University of Technology. <a href="https://tabesh.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. Zeinab Maleki — Isfahan University of Technology. <a href="https://zmaleki.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. S. A. Khajehoddin — University of Alberta. <a href="http://www.ece.ualberta.ca/~khajeddi" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. Ahmadreza Zamani — Isfahan University of Technology. <a href="https://zamani.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. Hosein Farzanehfard — Isfahan University of Technology. <a href="https://farzanehfard.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. Masood Hajian — Isfahan University of Technology. <a href="https://hajian.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+        </ul>
+        <div class="progress" aria-hidden="true"></div>
+      </section>
+
+      <section class="section" style="text-align:center;background:transparent;border-color:transparent;box-shadow:none">
+        <span class="meta">© <span id="y"></span> Milad Mohammadrezaei — Academic CV</span>
+      </section>
+    </main>
+  </div>
+
+  <!-- Floating Command Dock -->
+  <div class="dock" aria-label="Quick Actions">
+    <a class="fab brand" href="mailto:m.mohammadrezaei@alumni.iut.ac.ir" title="Email (E)">
+      <i class="fa-solid fa-paper-plane"></i><span>Email</span>
+      <span class="tooltip">E</span>
+    </a>
+    <a class="fab" href="#publications" title="Publications (U)">
+      <i class="fa-regular fa-file-lines"></i><span>Pubs</span>
+      <span class="tooltip">U</span>
+    </a>
+    <button class="fab" id="dockTheme" title="Theme (T)">
+      <i class="fa-solid fa-moon"></i><span>Theme</span>
+      <span class="tooltip">T</span>
+    </button>
+    <button class="fab" id="dockPDF" title="Download PDF (P)">
+      <i class="fa-solid fa-file-arrow-down"></i><span>PDF</span>
+      <span class="tooltip">P</span>
+    </button>
+    <a class="fab" href="https://scholar.google.com/citations?user=4nlG_hYAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener" title="Google Scholar (G)">
+      <i class="fa-brands fa-google"></i><span>Scholar</span>
+      <span class="tooltip">G</span>
+    </a>
+  </div>
+
+  <script>
+    const root = document.body;
+
+    // Theme toggle (dock)
+    const dockTheme = document.getElementById('dockTheme');
+    function toggleTheme(){
+      const cur = root.getAttribute('data-theme') || 'dark';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      const icon = next === 'light' ? 'fa-moon' : 'fa-sun';
+      dockTheme.innerHTML = `<i class="fa-solid ${icon}"></i><span>Theme</span><span class="tooltip">T</span>`;
+    }
+    dockTheme.addEventListener('click', toggleTheme);
+
+    // Print / PDF
+    document.getElementById('dockPDF').addEventListener('click', ()=> window.print());
+
+    // Palette switch
+    document.querySelectorAll('.swatch').forEach(s => {
+      s.addEventListener('click', ()=> root.setAttribute('data-palette', s.getAttribute('data-p')));
+    });
+
+    // ScrollSpy + progress bars
+    const ids = ['profile','education','publications','research-teaching','industry','honors','skills','references'];
+    const sections = ids.map(id => ({id, el: document.getElementById(id)}));
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const prog = new Map(ids.map(id => [id, document.querySelector(`#${id} .progress`)]));
+
+    function markActive(){
+      let top = window.scrollY + 140;
+      let cur = sections[0].id;
+      for (const s of sections){ if(s.el && s.el.offsetTop <= top) cur = s.id; }
+      tabs.forEach(t => t.classList.toggle('active', t.getAttribute('href') === '#'+cur));
+    }
+    function updateProgress(){
+      const vh = window.innerHeight;
+      sections.forEach(({id, el})=>{
+        const p = prog.get(id); if(!p) return;
+        const rect = el.getBoundingClientRect();
+        const ratio = rect.height ? Math.min(1, Math.max(0, (vh - rect.top) / (rect.height + vh))) : 0;
+        p.style.width = (ratio*100).toFixed(1) + '%';
+        p.style.opacity = (rect.top < vh && rect.bottom > 0) ? 1 : 0;
+      });
+    }
+    document.addEventListener('scroll', ()=>{ markActive(); updateProgress(); }, {passive:true});
+    window.addEventListener('load', ()=>{
+      markActive(); updateProgress(); document.getElementById('y').textContent = new Date().getFullYear();
+    });
+
+    // Publications expand/collapse all
+    const expandAll = document.getElementById('expandAll');
+    const collapseAll = document.getElementById('collapseAll');
+    const pubs = () => Array.from(document.querySelectorAll('details.pub'));
+    if (expandAll) expandAll.addEventListener('click', ()=> pubs().forEach(d => d.open = true));
+    if (collapseAll) collapseAll.addEventListener('click', ()=> pubs().forEach(d => d.open = false));
+
+    // Single-language summary toggles
+    document.querySelectorAll('.summary-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const target = btn.getAttribute('data-target');
+        const el = document.querySelector(`.sum[data-sum="${target}"]`);
+        if(!el) return;
+        const show = el.style.display === 'none' || el.style.display === '';
+        el.style.display = show ? 'block' : 'none';
+        btn.textContent = show ? 'Hide abstract' : 'Abstract';
+        btn.classList.toggle('active', show);
+      });
+    });
+
+    // Keyboard shortcuts: T (theme), P (pdf), G (scholar), E (email), U (publications)
+    document.addEventListener('keydown', (e)=>{
+      if (['INPUT','TEXTAREA'].includes((e.target.tagName||'').toUpperCase())) return;
+      const k = e.key.toLowerCase();
+      if (k==='t'){ toggleTheme(); }
+      else if (k==='p'){ window.print(); }
+      else if (k==='g'){ window.open('https://scholar.google.com/citations?user=4nlG_hYAAAAJ&hl=en&oi=ao','_blank'); }
+      else if (k==='e'){ window.location.href='mailto:m.mohammadrezaei@alumni.iut.ac.ir'; }
+      else if (k==='u'){ document.querySelector('a[href="#publications"]').click(); }
+    });
+  </script>
 </body>
 </html>
