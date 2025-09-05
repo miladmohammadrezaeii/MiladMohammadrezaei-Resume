@@ -12,31 +12,25 @@
 
   <style>
     :root{
-      --bg:#0c0e13; --panel:#12141b; --glass:rgba(18,20,27,.6);
-      --text:#e8edf5; --muted:#a8b1c0; --line:#242836; --ring:rgba(255,255,255,.08);
+      /* Light baseline (Ocean palette) */
+      --bg:#f6f9ff; --panel:rgba(255,255,255,.7); --glass:rgba(255,255,255,.75);
+      --text:#0f172a; --muted:#5b6575; --line:#deebff; --ring:rgba(16,24,40,.08);
+      --shadow:0 10px 30px rgba(16,24,40,.10);
+
+      --brand-1:#2563eb; --brand-2:#60a5fa; /* ribbon */
+      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9;
+      --accent-re:#14b8a6; --accent-ind:#06b6d4; --accent-hon:#67e8f9;
+      --accent-skill:#60a5fa; --accent-ref:#93c5fd;
+
+      --link:#2b72ff; --sidebar-w:320px; --radius:22px; --ease:cubic-bezier(.2,.7,.2,1);
+      --dot:#dbeafe;
+    }
+    /* Dark mode */
+    [data-theme="dark"]{
+      --bg:#0c0e13; --panel:rgba(18,20,27,.6); --glass:rgba(18,20,27,.65);
+      --text:#e8edf5; --muted:#a8b1c0; --line:#23293a; --ring:rgba(255,255,255,.08);
       --shadow:0 10px 30px rgba(0,0,0,.45);
-      --brand-1:#8a1538; --brand-2:#c42d5a;
-      --accent-profile:#7dd3fc; --accent-edu:#a78bfa; --accent-pub:#fb7185;
-      --accent-re:#34d399; --accent-ind:#f59e0b; --accent-hon:#f472b6;
-      --accent-skill:#60a5fa; --accent-ref:#fca5a5;
-      --link:#8ab4ff; --sidebar-w:320px; --radius:16px; --ease:cubic-bezier(.2,.7,.2,1);
-    }
-    [data-theme="light"]{
-      --bg:#f6f8fc; --panel:#ffffff; --glass:rgba(255,255,255,.7);
-      --text:#0e1320; --muted:#5b6575; --line:#e7ebf3; --ring:rgba(16,24,40,.07);
-      --shadow:0 10px 30px rgba(16,24,40,.12); --link:#2b72ff;
-    }
-    [data-palette="ocean"]{
-      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9; --accent-re:#14b8a6;
-      --accent-ind:#06b6d4; --accent-hon:#67e8f9; --accent-skill:#60a5fa; --accent-ref:#93c5fd;
-    }
-    [data-palette="aurora"]{
-      --accent-profile:#34d399; --accent-edu:#a3e635; --accent-pub:#f43f5e; --accent-re:#22c55e;
-      --accent-ind:#f59e0b; --accent-hon:#e879f9; --accent-skill:#4ade80; --accent-ref:#fb923c;
-    }
-    [data-palette="solar"]{
-      --accent-profile:#fde047; --accent-edu:#fbbf24; --accent-pub:#fb7185; --accent-re:#84cc16;
-      --accent-ind:#f59e0b; --accent-hon:#f472b6; --accent-skill:#fcd34d; --accent-ref:#fca5a5;
+      --brand-1:#3b82f6; --brand-2:#60a5fa; --link:#8ab4ff; --dot:#1f2937;
     }
 
     *{box-sizing:border-box}
@@ -45,73 +39,132 @@
     body{
       color:var(--text);
       background:
-        radial-gradient(1200px 700px at 110% -10%, rgba(196,45,90,.15), transparent 60%),
-        radial-gradient(900px 600px at -10% 110%, rgba(122,18,50,.18), transparent 60%),
+        radial-gradient(1200px 700px at 110% -10%, rgba(96,165,250,.22), transparent 60%),
+        radial-gradient(900px 600px at -10% 110%, rgba(37,99,235,.18), transparent 60%),
         var(--bg);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       line-height:1.65;
+      overflow-x:hidden;
     }
 
-    .layout{display:grid; grid-template-columns: var(--sidebar-w) 1fr; min-height:100dvh}
+    /* Subtle dotted parallax background */
+    .bg-dots::before, .bg-dots::after{
+      content:""; position:fixed; inset:auto -100px 12% -100px; height:260px; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(circle at 10% 50%, var(--dot) 1px, transparent 2px) 0 0/18px 18px,
+        radial-gradient(circle at 60% 40%, var(--dot) 1px, transparent 2px) 0 0/22px 22px;
+      filter: blur(.2px); opacity:.55; transform: translateZ(0);
+    }
+    .bg-dots::after{ bottom: auto; top: 8%; opacity:.4; }
+
+    .layout{display:grid; grid-template-columns: var(--sidebar-w) 1fr; min-height:100dvh; position:relative; z-index:1}
     @media (max-width: 980px){
       :root{ --sidebar-w: 100% } .layout{grid-template-columns:1fr}
       .sidebar{position:static;height:auto}
       .main{padding:18px}
     }
 
-    /* Sidebar */
+    /* ===== Sidebar (Bubble/Glass) ===== */
     .sidebar{
       position: sticky; top:0; height:100dvh; overflow:auto;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, var(--glass), rgba(0,0,0,0));
-      border-right:1px solid var(--line); box-shadow: var(--shadow); padding:18px;
+      backdrop-filter: blur(20px) saturate(170%);
+      background: var(--glass);
+      border-right:1px solid var(--line);
+      padding:18px;
+      box-shadow:
+        inset 1px 1px 2px rgba(255,255,255,0.5),
+        inset -1px -1px 2px rgba(0,0,0,0.04),
+        4px 6px 16px rgba(0,0,0,0.06);
+    }
+    [data-theme="dark"] .sidebar{
+      background: var(--glass);
+      box-shadow:
+        inset 1px 1px 2px rgba(255,255,255,0.03),
+        inset -1px -1px 2px rgba(0,0,0,0.6),
+        4px 6px 18px rgba(0,0,0,0.42);
     }
     .brand{display:flex; align-items:center; gap:12px; margin-bottom:12px}
     .avatar{
       width:64px; height:64px; border-radius:18px; overflow:hidden; border:1px solid var(--ring);
-      background: linear-gradient(135deg,#1d2230,#0f1118); display:grid; place-items:center; color:#fff; font:800 1rem Sen, Inter, sans-serif;
+      background: linear-gradient(135deg,#e2e8f0,#f8fafc); display:grid; place-items:center; color:#1e293b; font:800 1rem Sen, Inter, sans-serif;
+      box-shadow: 2px 4px 10px rgba(0,0,0,.06), -2px -2px 10px rgba(255,255,255,.55) inset;
     }
+    [data-theme="dark"] .avatar{background: linear-gradient(135deg,#1d2230,#0f1118); color:#fff}
     .avatar img{width:100%; height:100%; object-fit:cover; display:block}
     .name{margin:0; font:800 1.28rem/1.2 Sen, Inter, sans-serif}
     .role{margin:2px 0 0; color:var(--muted); font-weight:700}
 
-    .nav{display:flex; flex-direction:column; gap:8px; margin:10px 0 16px}
+    .nav{display:flex; flex-direction:column; gap:10px; margin:14px 0 18px}
     .tab{
-      padding:10px 12px; border-radius:12px; text-decoration:none; color:var(--muted); border:1px solid transparent;
-      font-weight:800; display:flex; align-items:center; gap:10px; transition: background .2s, border-color .2s, color .2s;
+      padding:12px 13px; border-radius:18px; text-decoration:none; color:var(--muted); border:1px solid transparent;
+      font-weight:800; display:flex; align-items:center; gap:10px; transition: background .25s, border-color .25s, color .25s, transform .25s;
+      background: linear-gradient(145deg, rgba(255,255,255,.6), rgba(255,255,255,.25));
+      backdrop-filter: blur(14px);
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.7);
     }
-    .tab:hover{color:var(--text); border-color:var(--line)}
-    .tab.active{color:var(--text); border-color:var(--brand-2); background:rgba(196,45,90,.12)}
-    [data-theme="light"] .tab.active{background:rgba(122,18,50,.08)}
+    [data-theme="dark"] .tab{
+      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
+      box-shadow: 3px 3px 10px rgba(0,0,0,.55), -2px -2px 6px rgba(255,255,255,.05);
+    }
+    .tab:hover{color:var(--text); border-color:#c7ddff; transform: translateY(-1px)}
+    .tab.active{color:var(--text); border-color:#bfdbfe; background:rgba(191,219,254,.45)}
 
-    .side-sec{margin: 16px 0}
+    .side-sec{margin: 18px 0}
     .side-sec h3{margin:.2rem 0 8px; font:800 0.95rem/1.2 Sen, Inter, sans-serif}
     .chips{display:flex; flex-wrap:wrap; gap:8px}
     .chip{
-      padding:6px 10px; border:1px solid var(--line); border-radius:999px; font-weight:800; font-size:.88rem;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      cursor:pointer;
+      padding:7px 11px; border:1px solid var(--line); border-radius:999px; font-weight:800; font-size:.9rem;
+      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3));
+      box-shadow: 2px 2px 6px rgba(0,0,0,.08), -2px -2px 6px rgba(255,255,255,.6);
+      cursor:default;
     }
+    [data-theme="dark"] .chip{
+      background: linear-gradient(145deg, rgba(25,28,36,.8), rgba(15,17,25,.55));
+      box-shadow: 2px 2px 6px rgba(0,0,0,.6), -2px -2px 6px rgba(255,255,255,.04);
+    }
+
     .palette{display:flex; gap:8px; margin-top:8px}
-    .swatch{width:36px; height:28px; border-radius:8px; border:1px solid var(--line); cursor:pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.05)}
+    .swatch{width:36px; height:28px; border-radius:10px; border:1px solid var(--line); cursor:pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.4)}
     .swatch[data-p="classic"]{ background: linear-gradient(90deg,#7dd3fc,#a78bfa,#fb7185) }
     .swatch[data-p="ocean"]{ background: linear-gradient(90deg,#22d3ee,#0ea5e9,#14b8a6) }
     .swatch[data-p="aurora"]{ background: linear-gradient(90deg,#34d399,#a3e635,#f43f5e) }
     .swatch[data-p="solar"]{   background: linear-gradient(90deg,#fde047,#f59e0b,#fb7185) }
     .foot-note{color:var(--muted); font-size:.9rem; border-top:1px dashed var(--line); padding-top:8px; margin-top:14px}
 
-    /* Main */
-    .main{padding:26px 26px 100px; max-width:980px; width:100%; margin:0 auto}
+    /* ===== Main (Bubble sections) ===== */
+    .main{padding:26px 26px 120px; max-width:980px; width:100%; margin:0 auto}
     .section{
-      position:relative; border:1px solid var(--line); border-radius: var(--radius); padding:16px 16px 18px;
-      margin-bottom:18px; background: var(--panel); box-shadow: var(--shadow); overflow:hidden;
+      position:relative; border:1px solid rgba(255,255,255,.35);
+      border-radius: var(--radius); padding:18px 20px; margin-bottom:22px; background: var(--panel);
+      backdrop-filter: blur(20px) saturate(170%);
+      box-shadow:
+        inset 1px 1px 2px rgba(255,255,255,0.55),
+        inset -1px -1px 2px rgba(0,0,0,0.05),
+        6px 8px 24px rgba(0,0,0,0.12);
+      overflow:hidden; animation: rise .5s var(--ease) both;
     }
-    .section::before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background: linear-gradient(90deg, var(--brand-1), var(--brand-2)); opacity:.28}
-    .section[data-accent]::before{background: linear-gradient(90deg, var(--accent-color), transparent 70%); opacity:.9}
-    .section h2{display:flex; align-items:center; gap:10px; margin:.2rem 0 8px; font:800 1.06rem/1.2 Sen, Inter, sans-serif; letter-spacing:.2px}
-    .meta{color:var(--muted); font-weight:600}
-    .bullets{margin:8px 0 0; padding-left:18px} .bullets li{margin:6px 0}
+    [data-theme="dark"] .section{
+      border-color: rgba(255,255,255,.08);
+      background: rgba(20,22,28,.6);
+      box-shadow:
+        inset 1px 1px 2px rgba(255,255,255,0.05),
+        inset -1px -1px 2px rgba(0,0,0,0.55),
+        6px 8px 26px rgba(0,0,0,0.5);
+    }
+    @keyframes rise{from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none}}
 
+    /* Ribbon top with bubbles */
+    .section::before{
+      content:""; position:absolute; inset:0 0 auto 0; height:6px; opacity:.95;
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+      mask: radial-gradient(36px 10px at 0% 100%, #0000 49%, #000 50%) repeat-x left top/120px 6px;
+    }
+    .section[data-accent]::before{
+      background: linear-gradient(90deg, var(--accent-color), transparent 70%);
+    }
+    .section h2{display:flex; align-items:center; gap:10px; margin:.2rem 0 8px; font:800 1.06rem/1.2 Sen, Inter, sans-serif; letter-spacing:.2px}
+
+    /* Section-specific accent colors */
     #profile  { --accent-color: var(--accent-profile) }
     #education{ --accent-color: var(--accent-edu) }
     #publications{ --accent-color: var(--accent-pub) }
@@ -122,59 +175,95 @@
     #references{ --accent-color: var(--accent-ref) }
 
     .slogan{margin:0;color:var(--muted);font-weight:700}
-    .callout{margin:8px 0 0; padding:12px; border-radius:12px; border:1px dashed var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.02), transparent)}
+    .callout{
+      margin:10px 0 0; padding:12px 14px; border-radius:18px; border:1px dashed var(--line);
+      background: linear-gradient(145deg, rgba(37,99,235,.06), rgba(255,255,255,0.35));
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,.5);
+    }
+    .meta{color:var(--muted); font-weight:600}
+    .bullets{margin:8px 0 0; padding-left:18px} .bullets li{margin:6px 0}
 
     .toolbar{display:flex; gap:8px; margin:8px 0 6px; flex-wrap:wrap}
-    .btn{padding:8px 12px; border-radius:12px; border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0)); color:var(--text);
-      text-decoration:none; font-weight:800; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s, background .2s}
-    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 20px var(--ring); border-color:var(--brand-2)}
-    details.pub{border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:8px 0;
-      background: linear-gradient(180deg, rgba(255,255,255,.02), transparent); transition: border-color .2s}
-    details.pub[open]{border-color: var(--accent-pub)}
+    .btn{
+      padding:9px 13px; border-radius:18px; border:1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3)); color:var(--text);
+      text-decoration:none; font-weight:800; transition: transform .18s var(--ease), box-shadow .22s var(--ease), border-color .2s, background .2s;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.7);
+    }
+    [data-theme="dark"] .btn{
+      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.55), -3px -3px 8px rgba(255,255,255,.06);
+    }
+    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.18); border-color:#bfdbfe}
+
+    details.pub{
+      border:1px solid var(--line); border-radius:18px; padding:10px 12px; margin:10px 0;
+      background: linear-gradient(145deg, rgba(37,99,235,.05), rgba(255,255,255,.3));
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,.5);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    details.pub[open]{border-color:#93c5fd; box-shadow: inset 1px 1px 0 rgba(255,255,255,.7)}
     summary{list-style:none; display:flex; gap:12px; align-items:flex-start; cursor:pointer}
     summary::-webkit-details-marker{display:none}
     .p-title{font-weight:800} .p-where{color:var(--muted); font-weight:800}
     .p-year{margin-left:auto; color:var(--muted); font-weight:800}
     .divider{height:1px;background:var(--line);margin:8px 0}
-    .kbd{font:800 .82rem ui-monospace; border:1px solid var(--line); border-radius:8px; padding:2px 8px; color:var(--muted)}
-    .sumbox{border:1px dashed var(--line); border-radius:10px; padding:10px; margin-top:8px; background:linear-gradient(180deg, rgba(255,255,255,.015), transparent)}
+    .kbd{font:800 .82rem ui-monospace; border:1px solid var(--line); border-radius:10px; padding:2px 8px; color:var(--muted);
+         background:linear-gradient(145deg, rgba(255,255,255,.7), rgba(255,255,255,.25))}
+    .sumbox{border:1px dashed var(--line); border-radius:14px; padding:10px 12px; margin-top:8px; background:linear-gradient(145deg, rgba(37,99,235,.04), rgba(255,255,255,.35))}
 
     .progress{position:absolute; bottom:0; left:0; height:3px; width:0%; background: linear-gradient(90deg, var(--accent-color), transparent 80%); transition: width .15s var(--ease)}
+
     a{color:var(--link); text-decoration:none} a:hover{text-decoration:underline}
 
-    /* Floating Dock */
+    /* ===== Floating Dock (glassy bubble + ripple) ===== */
     .dock{
       position: fixed; right: 22px; bottom: 18px; display: flex; gap: 10px; align-items:center;
-      background: rgba(0,0,0,.18); border:1px solid var(--line); backdrop-filter: blur(10px);
-      border-radius: 999px; padding: 8px; box-shadow: var(--shadow); z-index: 999;
+      background: rgba(255,255,255,.65); border:1px solid var(--line); backdrop-filter: blur(12px) saturate(160%);
+      border-radius: 999px; padding: 8px; box-shadow: 6px 10px 26px rgba(0,0,0,.14), inset 1px 1px 0 rgba(255,255,255,.6);
+      z-index: 999;
     }
-    [data-theme="light"] .dock{background: rgba(255,255,255,.7)}
-    .dock .fab{
-      border:1px solid var(--line); border-radius: 999px; height:44px; padding:0 14px;
+    [data-theme="dark"] .dock{background: rgba(15,17,25,.45)}
+    .fab{
+      position:relative; overflow:hidden;
+      border:1px solid var(--line); border-radius: 999px; height:46px; padding:0 15px;
       display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3));
       cursor:pointer; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s;
+      box-shadow: 3px 3px 8px rgba(0,0,0,.08), -3px -3px 8px rgba(255,255,255,.7);
     }
-    .dock .fab:hover{transform:translateY(-2px); box-shadow:0 10px 20px var(--ring); border-color:var(--brand-2)}
-    .dock .fab.brand{background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); border-color: transparent; color:#fff}
-    .dock .tooltip{
-      position:absolute; bottom:58px; transform: translateX(-50%); background:#000; color:#fff;
-      font-size:.8rem; padding:6px 8px; border-radius:8px; opacity:0; pointer-events:none; transition: opacity .15s var(--ease)
+    [data-theme="dark"] .fab{
+      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
+      box-shadow: 3px 3px 8px rgba(0,0,0,.55), -3px -3px 8px rgba(255,255,255,.06);
     }
-    .dock .fab:hover .tooltip{opacity:.9}
+    .fab:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.18); border-color:#bfdbfe}
+    .fab.brand{background: linear-gradient(135deg, #2563eb, #60a5fa); border-color: transparent; color:#fff}
+    .fab .tooltip{
+      position:absolute; bottom:58px; transform: translateX(-50%); left:50%;
+      background:#0f172a; color:#fff; font-size:.8rem; padding:6px 8px; border-radius:10px; opacity:0; pointer-events:none; transition: opacity .15s var(--ease)
+    }
+    [data-theme="dark"] .fab .tooltip{background:#000}
+    .fab:hover .tooltip{opacity:.9}
+    .fab:active::after{
+      content:""; position:absolute; inset:0;
+      background:radial-gradient(140px 140px at var(--x,50%) var(--y,50%), rgba(96,165,250,.35), transparent 40%);
+      pointer-events:none;
+    }
     @media (max-width: 640px){
       .dock{left:50%; right:auto; transform: translateX(-50%);}
-      .dock .fab span{display:none}
+      .fab span{display:none}
     }
 
-    @media print{ .dock{display:none} .sidebar{display:none} .main{padding:0} .section{box-shadow:none; page-break-inside: avoid} a{color:#000; text-decoration:none} body{background:#fff} }
+    @media print{
+      .dock{display:none} .sidebar{display:none} .main{padding:0}
+      .section{box-shadow:none; page-break-inside: avoid}
+      a{color:#000; text-decoration:none} body{background:#fff}
+    }
   </style>
 </head>
-<body data-theme="dark" data-palette="classic">
+<body class="bg-dots" data-theme="light" data-palette="ocean">
   <div class="layout">
-    <!-- SIDEBAR -->
+    <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
       <div class="brand">
         <div class="avatar" title="Google Scholar photo">
@@ -186,7 +275,6 @@
         </div>
       </div>
 
-      <!-- Side navigation -->
       <nav class="nav" id="sidenav">
         <a class="tab active" href="#profile"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
         <a class="tab" href="#education"><i class="fa-solid fa-graduation-cap"></i> <span>Education</span></a>
@@ -220,7 +308,7 @@
       <div class="foot-note">© <span id="y"></span> Milad Mohammadrezaei</div>
     </aside>
 
-    <!-- MAIN -->
+    <!-- ===== MAIN ===== -->
     <main class="main">
       <!-- Profile -->
       <section class="section" id="profile" data-accent>
@@ -463,7 +551,7 @@
           <li>Dr. S. A. Khajehoddin — University of Alberta. <a href="http://www.ece.ualberta.ca/~khajeddi" target="_blank" rel="noopener">web</a></li>
           <li>Dr. Ahmadreza Zamani — Isfahan University of Technology. <a href="https://zamani.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
           <li>Dr. Hosein Farzanehfard — Isfahan University of Technology. <a href="https://farzanehfard.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. Masood Hajian — Isfahan University of Technology. <a href="https://hajian.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
+          <li>Dr. Mohsen Hajian — Isfahan University of Technology. <a href="https://hajian.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
         </ul>
         <div class="progress" aria-hidden="true"></div>
       </section>
@@ -474,7 +562,7 @@
     </main>
   </div>
 
-  <!-- Floating Command Dock -->
+  <!-- ===== Floating Command Dock ===== -->
   <div class="dock" aria-label="Quick Actions">
     <a class="fab brand" href="mailto:m.mohammadrezaei@alumni.iut.ac.ir" title="Email (E)">
       <i class="fa-solid fa-paper-plane"></i><span>Email</span>
@@ -484,8 +572,8 @@
       <i class="fa-regular fa-file-lines"></i><span>Pubs</span>
       <span class="tooltip">U</span>
     </a>
-    <button class="fab" id="dockTheme" title="Theme (T)">
-      <i class="fa-solid fa-moon"></i><span>Theme</span>
+    <button class="fab" id="dockTheme" title="Light/Dark (T)">
+      <i class="fa-solid fa-sun"></i><span>Theme</span>
       <span class="tooltip">T</span>
     </button>
     <button class="fab" id="dockPDF" title="Download PDF (P)">
@@ -496,21 +584,42 @@
       <i class="fa-brands fa-google"></i><span>Scholar</span>
       <span class="tooltip">G</span>
     </a>
+    <!-- NEW: LinkedIn -->
+    <a class="fab" href="https://www.linkedin.com/in/milad-mohammadrezaei-04255917a" target="_blank" rel="noopener" title="LinkedIn (L)">
+      <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span>
+      <span class="tooltip">L</span>
+    </a>
   </div>
 
   <script>
     const root = document.body;
 
-    // Theme toggle (dock)
+    // Theme toggle (default light → dark)
     const dockTheme = document.getElementById('dockTheme');
-    function toggleTheme(){
-      const cur = root.getAttribute('data-theme') || 'dark';
+    function toggleTheme(e){
+      const cur = root.getAttribute('data-theme') || 'light';
       const next = cur === 'dark' ? 'light' : 'dark';
+      if(e){
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - rect.left)/rect.width)*100;
+        const y = ((e.clientY - rect.top)/rect.height)*100;
+        e.currentTarget.style.setProperty('--x', x+'%'); e.currentTarget.style.setProperty('--y', y+'%');
+      }
       root.setAttribute('data-theme', next);
-      const icon = next === 'light' ? 'fa-moon' : 'fa-sun';
+      const icon = next === 'light' ? 'fa-sun' : 'fa-moon';
       dockTheme.innerHTML = `<i class="fa-solid ${icon}"></i><span>Theme</span><span class="tooltip">T</span>`;
     }
     dockTheme.addEventListener('click', toggleTheme);
+
+    // Ripple coords for all fabs
+    document.querySelectorAll('.fab').forEach(f=>{
+      f.addEventListener('pointerdown', (e)=>{
+        const rect = f.getBoundingClientRect();
+        const x = ((e.clientX - rect.left)/rect.width)*100;
+        const y = ((e.clientY - rect.top)/rect.height)*100;
+        f.style.setProperty('--x', x+'%'); f.style.setProperty('--y', y+'%');
+      });
+    });
 
     // Print / PDF
     document.getElementById('dockPDF').addEventListener('click', ()=> window.print());
@@ -525,7 +634,6 @@
     const sections = ids.map(id => ({id, el: document.getElementById(id)}));
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const prog = new Map(ids.map(id => [id, document.querySelector(`#${id} .progress`)]));
-
     function markActive(){
       let top = window.scrollY + 140;
       let cur = sections[0].id;
@@ -554,7 +662,7 @@
     if (expandAll) expandAll.addEventListener('click', ()=> pubs().forEach(d => d.open = true));
     if (collapseAll) collapseAll.addEventListener('click', ()=> pubs().forEach(d => d.open = false));
 
-    // Single-language summary toggles
+    // Summary toggles
     document.querySelectorAll('.summary-toggle').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const target = btn.getAttribute('data-target');
@@ -567,13 +675,14 @@
       });
     });
 
-    // Keyboard shortcuts: T (theme), P (pdf), G (scholar), E (email), U (publications)
+    // Keyboard shortcuts: T (theme), P (pdf), G (scholar), L (LinkedIn), E (email), U (publications)
     document.addEventListener('keydown', (e)=>{
       if (['INPUT','TEXTAREA'].includes((e.target.tagName||'').toUpperCase())) return;
       const k = e.key.toLowerCase();
-      if (k==='t'){ toggleTheme(); }
+      if (k==='t'){ toggleTheme(e); }
       else if (k==='p'){ window.print(); }
       else if (k==='g'){ window.open('https://scholar.google.com/citations?user=4nlG_hYAAAAJ&hl=en&oi=ao','_blank'); }
+      else if (k==='l'){ window.open('https://www.linkedin.com/in/milad-mohammadrezaei-04255917a','_blank'); }
       else if (k==='e'){ window.location.href='mailto:m.mohammadrezaei@alumni.iut.ac.ir'; }
       else if (k==='u'){ document.querySelector('a[href="#publications"]').click(); }
     });
