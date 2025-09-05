@@ -12,12 +12,17 @@
 
   <style>
     :root{
-      /* Light baseline (Ocean palette) */
+      /* ===== Light baseline (Ocean palette by default) ===== */
       --bg:#f6f9ff; --panel:rgba(255,255,255,.7); --glass:rgba(255,255,255,.75);
       --text:#0f172a; --muted:#5b6575; --line:#deebff; --ring:rgba(16,24,40,.08);
       --shadow:0 10px 30px rgba(16,24,40,.10);
 
-      --brand-1:#2563eb; --brand-2:#60a5fa; /* ribbon */
+      /* Background aura colors (depend on palette) */
+      --bg1: rgba(96,165,250,.22); /* ocean */
+      --bg2: rgba(37,99,235,.18);
+
+      /* Brand ribbon + accents (depend on palette) */
+      --brand-1:#2563eb; --brand-2:#60a5fa;
       --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9;
       --accent-re:#14b8a6; --accent-ind:#06b6d4; --accent-hon:#67e8f9;
       --accent-skill:#60a5fa; --accent-ref:#93c5fd;
@@ -25,12 +30,46 @@
       --link:#2b72ff; --sidebar-w:320px; --radius:22px; --ease:cubic-bezier(.2,.7,.2,1);
       --dot:#dbeafe;
     }
-    /* Dark mode */
+    /* ===== Dark mode baseline ===== */
     [data-theme="dark"]{
       --bg:#0c0e13; --panel:rgba(18,20,27,.6); --glass:rgba(18,20,27,.65);
       --text:#e8edf5; --muted:#a8b1c0; --line:#23293a; --ring:rgba(255,255,255,.08);
       --shadow:0 10px 30px rgba(0,0,0,.45);
-      --brand-1:#3b82f6; --brand-2:#60a5fa; --link:#8ab4ff; --dot:#1f2937;
+      --link:#8ab4ff; --dot:#1f2937;
+    }
+
+    /* ===== Palette overrides ===== */
+    /* Classic: sky → purple → rose */
+    [data-palette="classic"]{
+      --brand-1:#7dd3fc; --brand-2:#a78bfa;
+      --accent-profile:#7dd3fc; --accent-edu:#a78bfa; --accent-pub:#fb7185;
+      --accent-re:#60a5fa; --accent-ind:#c084fc; --accent-hon:#fda4af;
+      --accent-skill:#93c5fd; --accent-ref:#f9a8d4;
+      --bg1: rgba(167,139,250,.22); --bg2: rgba(251,113,133,.18);
+    }
+    /* Ocean (default): cyan/blue/teal */
+    [data-palette="ocean"]{
+      --brand-1:#2563eb; --brand-2:#60a5fa;
+      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9;
+      --accent-re:#14b8a6; --accent-ind:#06b6d4; --accent-hon:#67e8f9;
+      --accent-skill:#60a5fa; --accent-ref:#93c5fd;
+      --bg1: rgba(96,165,250,.22); --bg2: rgba(37,99,235,.18);
+    }
+    /* Aurora: green → lime → rose */
+    [data-palette="aurora"]{
+      --brand-1:#34d399; --brand-2:#a3e635;
+      --accent-profile:#34d399; --accent-edu:#4ade80; --accent-pub:#a3e635;
+      --accent-re:#22c55e; --accent-ind:#86efac; --accent-hon:#fde68a;
+      --accent-skill:#93e2a1; --accent-ref:#bef264;
+      --bg1: rgba(52,211,153,.22); --bg2: rgba(163,230,53,.18);
+    }
+    /* Solar: yellow → orange → rose */
+    [data-palette="solar"]{
+      --brand-1:#fde047; --brand-2:#f59e0b;
+      --accent-profile:#facc15; --accent-edu:#f59e0b; --accent-pub:#fb7185;
+      --accent-re:#fbbf24; --accent-ind:#f97316; --accent-hon:#fde047;
+      --accent-skill:#f8d34a; --accent-ref:#fbd38d;
+      --bg1: rgba(253,224,71,.22); --bg2: rgba(245,158,11,.18);
     }
 
     *{box-sizing:border-box}
@@ -39,8 +78,8 @@
     body{
       color:var(--text);
       background:
-        radial-gradient(1200px 700px at 110% -10%, rgba(96,165,250,.22), transparent 60%),
-        radial-gradient(900px 600px at -10% 110%, rgba(37,99,235,.18), transparent 60%),
+        radial-gradient(1200px 700px at 110% -10%, var(--bg1), transparent 60%),
+        radial-gradient(900px 600px at -10% 110%, var(--bg2), transparent 60%),
         var(--bg);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       line-height:1.65;
@@ -125,10 +164,8 @@
 
     .palette{display:flex; gap:8px; margin-top:8px}
     .swatch{width:36px; height:28px; border-radius:10px; border:1px solid var(--line); cursor:pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.4)}
-    .swatch[data-p="classic"]{ background: linear-gradient(90deg,#7dd3fc,#a78bfa,#fb7185) }
-    .swatch[data-p="ocean"]{ background: linear-gradient(90deg,#22d3ee,#0ea5e9,#14b8a6) }
-    .swatch[data-p="aurora"]{ background: linear-gradient(90deg,#34d399,#a3e635,#f43f5e) }
-    .swatch[data-p="solar"]{   background: linear-gradient(90deg,#fde047,#f59e0b,#fb7185) }
+    .swatch.active{outline:2px solid var(--brand-2)}
+
     .foot-note{color:var(--muted); font-size:.9rem; border-top:1px dashed var(--line); padding-top:8px; margin-top:14px}
 
     /* ===== Main (Bubble sections) ===== */
@@ -237,7 +274,7 @@
       box-shadow: 3px 3px 8px rgba(0,0,0,.55), -3px -3px 8px rgba(255,255,255,.06);
     }
     .fab:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.18); border-color:#bfdbfe}
-    .fab.brand{background: linear-gradient(135deg, #2563eb, #60a5fa); border-color: transparent; color:#fff}
+    .fab.brand{background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); border-color: transparent; color:#fff}
     .fab .tooltip{
       position:absolute; bottom:58px; transform: translateX(-50%); left:50%;
       background:#0f172a; color:#fff; font-size:.8rem; padding:6px 8px; border-radius:10px; opacity:0; pointer-events:none; transition: opacity .15s var(--ease)
@@ -299,7 +336,7 @@
         <h3>Accent Palette</h3>
         <div class="palette">
           <div class="swatch" data-p="classic" title="Classic"></div>
-          <div class="swatch" data-p="ocean" title="Ocean"></div>
+          <div class="swatch active" data-p="ocean" title="Ocean"></div>
           <div class="swatch" data-p="aurora" title="Aurora"></div>
           <div class="swatch" data-p="solar" title="Solar"></div>
         </div>
@@ -584,7 +621,6 @@
       <i class="fa-brands fa-google"></i><span>Scholar</span>
       <span class="tooltip">G</span>
     </a>
-    <!-- NEW: LinkedIn -->
     <a class="fab" href="https://www.linkedin.com/in/milad-mohammadrezaei-04255917a" target="_blank" rel="noopener" title="LinkedIn (L)">
       <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span>
       <span class="tooltip">L</span>
@@ -594,7 +630,21 @@
   <script>
     const root = document.body;
 
-    // Theme toggle (default light → dark)
+    // ===== Restore saved theme/palette =====
+    const savedTheme = localStorage.getItem('theme');
+    const savedPalette = localStorage.getItem('palette');
+    if (savedTheme) root.setAttribute('data-theme', savedTheme);
+    if (savedPalette) root.setAttribute('data-palette', savedPalette);
+
+    // Highlight active swatch on load
+    function setActiveSwatch(p) {
+      document.querySelectorAll('.swatch').forEach(sw => {
+        sw.classList.toggle('active', sw.getAttribute('data-p') === p);
+      });
+    }
+    setActiveSwatch(root.getAttribute('data-palette') || 'ocean');
+
+    // ===== Theme toggle (dock) =====
     const dockTheme = document.getElementById('dockTheme');
     function toggleTheme(e){
       const cur = root.getAttribute('data-theme') || 'light';
@@ -606,6 +656,7 @@
         e.currentTarget.style.setProperty('--x', x+'%'); e.currentTarget.style.setProperty('--y', y+'%');
       }
       root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
       const icon = next === 'light' ? 'fa-sun' : 'fa-moon';
       dockTheme.innerHTML = `<i class="fa-solid ${icon}"></i><span>Theme</span><span class="tooltip">T</span>`;
     }
@@ -624,9 +675,14 @@
     // Print / PDF
     document.getElementById('dockPDF').addEventListener('click', ()=> window.print());
 
-    // Palette switch
+    // ===== Palette switch (now works + persists) =====
     document.querySelectorAll('.swatch').forEach(s => {
-      s.addEventListener('click', ()=> root.setAttribute('data-palette', s.getAttribute('data-p')));
+      s.addEventListener('click', ()=>{
+        const p = s.getAttribute('data-p');
+        root.setAttribute('data-palette', p);
+        localStorage.setItem('palette', p);
+        setActiveSwatch(p);
+      });
     });
 
     // ScrollSpy + progress bars
