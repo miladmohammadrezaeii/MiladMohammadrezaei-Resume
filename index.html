@@ -267,7 +267,7 @@
       display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text);
       background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3));
       cursor:pointer; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s;
-      box-shadow: 3px 3px 8px rgba(0,0,0,.08), -3px -3px 8px rgba(255,255,255,.7);
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,.7);
     }
     [data-theme="dark"] .fab{
       background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
@@ -295,6 +295,32 @@
       .dock{display:none} .sidebar{display:none} .main{padding:0}
       .section{box-shadow:none; page-break-inside: avoid}
       a{color:#000; text-decoration:none} body{background:#fff}
+    }
+
+    /* ===== Justify main content text ===== */
+    .section p,
+    .section .callout,
+    .section .sum,
+    .section .sumbox p,
+    .section .card p,
+    .section .bullets,
+    .section .bullets li,
+    details.pub p,
+    details.pub .meta + p {
+      text-align: justify;
+      text-justify: inter-word;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
+    /* Keep UI elements not justified */
+    .slogan,
+    .meta,
+    .kbd,
+    .btn,
+    .tab,
+    .chip {
+      text-align: initial;
     }
   </style>
 </head>
@@ -675,7 +701,7 @@
     // Print / PDF
     document.getElementById('dockPDF').addEventListener('click', ()=> window.print());
 
-    // ===== Palette switch (now works + persists) =====
+    // ===== Palette switch (persists) =====
     document.querySelectorAll('.swatch').forEach(s => {
       s.addEventListener('click', ()=>{
         const p = s.getAttribute('data-p');
@@ -690,6 +716,7 @@
     const sections = ids.map(id => ({id, el: document.getElementById(id)}));
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const prog = new Map(ids.map(id => [id, document.querySelector(`#${id} .progress`)]));
+
     function markActive(){
       let top = window.scrollY + 140;
       let cur = sections[0].id;
