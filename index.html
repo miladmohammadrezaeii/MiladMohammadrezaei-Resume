@@ -1,773 +1,92 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CV — Milad Mohammadrezaei (Ph.D., Power Electronics)</title>
-  <meta name="description" content="Academic CV — Power Electronics, Li-ion battery SoH estimation, ML for power electronics, EV charging, converters" />
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Sen:wght@700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <style>
-    :root{
-      /* ===== Light baseline (Ocean palette by default) ===== */
-      --bg:#f6f9ff; --panel:rgba(255,255,255,.7); --glass:rgba(255,255,255,.75);
-      --text:#0f172a; --muted:#5b6575; --line:#deebff; --ring:rgba(16,24,40,.08);
-      --shadow:0 10px 30px rgba(16,24,40,.10);
-
-      /* Background aura colors (depend on palette) */
-      --bg1: rgba(96,165,250,.22); /* ocean */
-      --bg2: rgba(37,99,235,.18);
-
-      /* Brand ribbon + accents (depend on palette) */
-      --brand-1:#2563eb; --brand-2:#60a5fa;
-      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9;
-      --accent-re:#14b8a6; --accent-ind:#06b6d4; --accent-hon:#67e8f9;
-      --accent-skill:#60a5fa; --accent-ref:#93c5fd;
-
-      --link:#2b72ff; --sidebar-w:320px; --radius:22px; --ease:cubic-bezier(.2,.7,.2,1);
-      --dot:#dbeafe;
-    }
-    /* ===== Dark mode baseline ===== */
-    [data-theme="dark"]{
-      --bg:#0c0e13; --panel:rgba(18,20,27,.6); --glass:rgba(18,20,27,.65);
-      --text:#e8edf5; --muted:#a8b1c0; --line:#23293a; --ring:rgba(255,255,255,.08);
-      --shadow:0 10px 30px rgba(0,0,0,.45);
-      --link:#8ab4ff; --dot:#1f2937;
-    }
-
-    /* ===== Palette overrides ===== */
-    /* Classic: sky → purple → rose */
-    [data-palette="classic"]{
-      --brand-1:#7dd3fc; --brand-2:#a78bfa;
-      --accent-profile:#7dd3fc; --accent-edu:#a78bfa; --accent-pub:#fb7185;
-      --accent-re:#60a5fa; --accent-ind:#c084fc; --accent-hon:#fda4af;
-      --accent-skill:#93c5fd; --accent-ref:#f9a8d4;
-      --bg1: rgba(167,139,250,.22); --bg2: rgba(251,113,133,.18);
-    }
-    /* Ocean (default): cyan/blue/teal */
-    [data-palette="ocean"]{
-      --brand-1:#2563eb; --brand-2:#60a5fa;
-      --accent-profile:#38bdf8; --accent-edu:#22d3ee; --accent-pub:#0ea5e9;
-      --accent-re:#14b8a6; --accent-ind:#06b6d4; --accent-hon:#67e8f9;
-      --accent-skill:#60a5fa; --accent-ref:#93c5fd;
-      --bg1: rgba(96,165,250,.22); --bg2: rgba(37,99,235,.18);
-    }
-    /* Aurora: green → lime → rose */
-    [data-palette="aurora"]{
-      --brand-1:#34d399; --brand-2:#a3e635;
-      --accent-profile:#34d399; --accent-edu:#4ade80; --accent-pub:#a3e635;
-      --accent-re:#22c55e; --accent-ind:#86efac; --accent-hon:#fde68a;
-      --accent-skill:#93e2a1; --accent-ref:#bef264;
-      --bg1: rgba(52,211,153,.22); --bg2: rgba(163,230,53,.18);
-    }
-    /* Solar: yellow → orange → rose */
-    [data-palette="solar"]{
-      --brand-1:#fde047; --brand-2:#f59e0b;
-      --accent-profile:#facc15; --accent-edu:#f59e0b; --accent-pub:#fb7185;
-      --accent-re:#fbbf24; --accent-ind:#f97316; --accent-hon:#fde047;
-      --accent-skill:#f8d34a; --accent-ref:#fbd38d;
-      --bg1: rgba(253,224,71,.22); --bg2: rgba(245,158,11,.18);
-    }
-
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 110% -10%, var(--bg1), transparent 60%),
-        radial-gradient(900px 600px at -10% 110%, var(--bg2), transparent 60%),
-        var(--bg);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      line-height:1.65;
-      overflow-x:hidden;
-    }
-
-    /* Subtle dotted parallax background */
-    .bg-dots::before, .bg-dots::after{
-      content:""; position:fixed; inset:auto -100px 12% -100px; height:260px; pointer-events:none; z-index:0;
-      background:
-        radial-gradient(circle at 10% 50%, var(--dot) 1px, transparent 2px) 0 0/18px 18px,
-        radial-gradient(circle at 60% 40%, var(--dot) 1px, transparent 2px) 0 0/22px 22px;
-      filter: blur(.2px); opacity:.55; transform: translateZ(0);
-    }
-    .bg-dots::after{ bottom: auto; top: 8%; opacity:.4; }
-
-    .layout{display:grid; grid-template-columns: var(--sidebar-w) 1fr; min-height:100dvh; position:relative; z-index:1}
-    @media (max-width: 980px){
-      :root{ --sidebar-w: 100% } .layout{grid-template-columns:1fr}
-      .sidebar{position:static;height:auto}
-      .main{padding:18px}
-    }
-
-    /* ===== Sidebar (Bubble/Glass) ===== */
-    .sidebar{
-      position: sticky; top:0; height:100dvh; overflow:auto;
-      backdrop-filter: blur(20px) saturate(170%);
-      background: var(--glass);
-      border-right:1px solid var(--line);
-      padding:18px;
-      box-shadow:
-        inset 1px 1px 2px rgba(255,255,255,0.5),
-        inset -1px -1px 2px rgba(0,0,0,0.04),
-        4px 6px 16px rgba(0,0,0,0.06);
-    }
-    [data-theme="dark"] .sidebar{
-      background: var(--glass);
-      box-shadow:
-        inset 1px 1px 2px rgba(255,255,255,0.03),
-        inset -1px -1px 2px rgba(0,0,0,0.6),
-        4px 6px 18px rgba(0,0,0,0.42);
-    }
-    .brand{display:flex; align-items:center; gap:12px; margin-bottom:12px}
-    .avatar{
-      width:64px; height:64px; border-radius:18px; overflow:hidden; border:1px solid var(--ring);
-      background: linear-gradient(135deg,#e2e8f0,#f8fafc); display:grid; place-items:center; color:#1e293b; font:800 1rem Sen, Inter, sans-serif;
-      box-shadow: 2px 4px 10px rgba(0,0,0,.06), -2px -2px 10px rgba(255,255,255,.55) inset;
-    }
-    [data-theme="dark"] .avatar{background: linear-gradient(135deg,#1d2230,#0f1118); color:#fff}
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
-    .name{margin:0; font:800 1.28rem/1.2 Sen, Inter, sans-serif}
-    .role{margin:2px 0 0; color:var(--muted); font-weight:700}
-
-    .nav{display:flex; flex-direction:column; gap:10px; margin:14px 0 18px}
-    .tab{
-      padding:12px 13px; border-radius:18px; text-decoration:none; color:var(--muted); border:1px solid transparent;
-      font-weight:800; display:flex; align-items:center; gap:10px; transition: background .25s, border-color .25s, color .25s, transform .25s;
-      background: linear-gradient(145deg, rgba(255,255,255,.6), rgba(255,255,255,.25));
-      backdrop-filter: blur(14px);
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.7);
-    }
-    [data-theme="dark"] .tab{
-      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
-      box-shadow: 3px 3px 10px rgba(0,0,0,.55), -2px -2px 6px rgba(255,255,255,.05);
-    }
-    .tab:hover{color:var(--text); border-color:#c7ddff; transform: translateY(-1px)}
-    .tab.active{color:var(--text); border-color:#bfdbfe; background:rgba(191,219,254,.45)}
-
-    .side-sec{margin: 18px 0}
-    .side-sec h3{margin:.2rem 0 8px; font:800 0.95rem/1.2 Sen, Inter, sans-serif}
-    .chips{display:flex; flex-wrap:wrap; gap:8px}
-    .chip{
-      padding:7px 11px; border:1px solid var(--line); border-radius:999px; font-weight:800; font-size:.9rem;
-      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3));
-      box-shadow: 2px 2px 6px rgba(0,0,0,.08), -2px -2px 6px rgba(255,255,255,.6);
-      cursor:default;
-    }
-    [data-theme="dark"] .chip{
-      background: linear-gradient(145deg, rgba(25,28,36,.8), rgba(15,17,25,.55));
-      box-shadow: 2px 2px 6px rgba(0,0,0,.6), -2px -2px 6px rgba(255,255,255,.04);
-    }
-
-    .palette{display:flex; gap:8px; margin-top:8px}
-    .swatch{width:36px; height:28px; border-radius:10px; border:1px solid var(--line); cursor:pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.4)}
-    .swatch.active{outline:2px solid var(--brand-2)}
-
-    .foot-note{color:var(--muted); font-size:.9rem; border-top:1px dashed var(--line); padding-top:8px; margin-top:14px}
-
-    /* ===== Main (Bubble sections) ===== */
-    .main{padding:26px 26px 120px; max-width:980px; width:100%; margin:0 auto}
-    .section{
-      position:relative; border:1px solid rgba(255,255,255,.35);
-      border-radius: var(--radius); padding:18px 20px; margin-bottom:22px; background: var(--panel);
-      backdrop-filter: blur(20px) saturate(170%);
-      box-shadow:
-        inset 1px 1px 2px rgba(255,255,255,0.55),
-        inset -1px -1px 2px rgba(0,0,0,0.05),
-        6px 8px 24px rgba(0,0,0,0.12);
-      overflow:hidden; animation: rise .5s var(--ease) both;
-    }
-    [data-theme="dark"] .section{
-      border-color: rgba(255,255,255,.08);
-      background: rgba(20,22,28,.6);
-      box-shadow:
-        inset 1px 1px 2px rgba(255,255,255,0.05),
-        inset -1px -1px 2px rgba(0,0,0,0.55),
-        6px 8px 26px rgba(0,0,0,0.5);
-    }
-    @keyframes rise{from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none}}
-
-    /* Ribbon top with bubbles */
-    .section::before{
-      content:""; position:absolute; inset:0 0 auto 0; height:6px; opacity:.95;
-      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
-      mask: radial-gradient(36px 10px at 0% 100%, #0000 49%, #000 50%) repeat-x left top/120px 6px;
-    }
-    .section[data-accent]::before{
-      background: linear-gradient(90deg, var(--accent-color), transparent 70%);
-    }
-    .section h2{display:flex; align-items:center; gap:10px; margin:.2rem 0 8px; font:800 1.06rem/1.2 Sen, Inter, sans-serif; letter-spacing:.2px}
-
-    /* Section-specific accent colors */
-    #profile  { --accent-color: var(--accent-profile) }
-    #education{ --accent-color: var(--accent-edu) }
-    #publications{ --accent-color: var(--accent-pub) }
-    #research-teaching{ --accent-color: var(--accent-re) }
-    #industry{ --accent-color: var(--accent-ind) }
-    #honors{ --accent-color: var(--accent-hon) }
-    #skills{ --accent-color: var(--accent-skill) }
-    #references{ --accent-color: var(--accent-ref) }
-
-    .slogan{margin:0;color:var(--muted);font-weight:700}
-    .callout{
-      margin:10px 0 0; padding:12px 14px; border-radius:18px; border:1px dashed var(--line);
-      background: linear-gradient(145deg, rgba(37,99,235,.06), rgba(255,255,255,0.35));
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,.5);
-    }
-    .meta{color:var(--muted); font-weight:600}
-    .bullets{margin:8px 0 0; padding-left:18px} .bullets li{margin:6px 0}
-
-    .toolbar{display:flex; gap:8px; margin:8px 0 6px; flex-wrap:wrap}
-    .btn{
-      padding:9px 13px; border-radius:18px; border:1px solid var(--line);
-      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3)); color:var(--text);
-      text-decoration:none; font-weight:800; transition: transform .18s var(--ease), box-shadow .22s var(--ease), border-color .2s, background .2s;
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.7);
-    }
-    [data-theme="dark"] .btn{
-      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.55), -2px -2px 8px rgba(255,255,255,.06);
-    }
-    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.18); border-color:#bfdbfe}
-
-    details.pub{
-      border:1px solid var(--line); border-radius:18px; padding:10px 12px; margin:10px 0;
-      background: linear-gradient(145deg, rgba(37,99,235,.05), rgba(255,255,255,.3));
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,.5);
-      transition: border-color .2s, box-shadow .2s;
-    }
-    details.pub[open]{border-color:#93c5fd; box-shadow: inset 1px 1px 0 rgba(255,255,255,.7)}
-    summary{list-style:none; display:flex; gap:12px; align-items:flex-start; cursor:pointer}
-    summary::-webkit-details-marker{display:none}
-    .p-title{font-weight:800} .p-where{color:var(--muted); font-weight:800}
-    .p-year{margin-left:auto; color:var(--muted); font-weight:800}
-    .divider{height:1px;background:var(--line);margin:8px 0}
-    .kbd{font:800 .82rem ui-monospace; border:1px solid var(--line); border-radius:10px; padding:2px 8px; color:var(--muted);
-         background:linear-gradient(145deg, rgba(255,255,255,.7), rgba(255,255,255,.25))}
-    .sumbox{border:1px dashed var(--line); border-radius:14px; padding:10px 12px; margin-top:8px; background:linear-gradient(145deg, rgba(37,99,235,.04), rgba(255,255,255,.35))}
-
-    .progress{position:absolute; bottom:0; left:0; height:3px; width:0%; background: linear-gradient(90deg, var(--accent-color), transparent 80%); transition: width .15s var(--ease)}
-
-    a{color:var(--link); text-decoration:none} a:hover{text-decoration:underline}
-
-    /* ===== Floating Dock (glassy bubble + ripple) ===== */
-    .dock{
-      position: fixed; right: 22px; bottom: 18px; display: flex; gap: 10px; align-items:center;
-      background: rgba(255,255,255,.65); border:1px solid var(--line); backdrop-filter: blur(12px) saturate(160%);
-      border-radius: 999px; padding: 8px; box-shadow: 6px 10px 26px rgba(0,0,0,.14), inset 1px 1px 0 rgba(255,255,255,.6);
-      z-index: 999;
-    }
-    [data-theme="dark"] .dock{background: rgba(15,17,25,.45)}
-    .fab{
-      position:relative; overflow:hidden;
-      border:1px solid var(--line); border-radius: 999px; height:46px; padding:0 15px;
-      display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text);
-      background: linear-gradient(145deg, rgba(255,255,255,.65), rgba(255,255,255,.3));
-      cursor:pointer; transition: transform .15s var(--ease), box-shadow .2s var(--ease), border-color .2s;
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,.7);
-    }
-    [data-theme="dark"] .fab{
-      background: linear-gradient(145deg, rgba(25,28,36,.85), rgba(15,17,25,.6));
-      box-shadow: 3px 3px 8px rgba(0,0,0,0.55), -2px -2px 8px rgba(255,255,255,.06);
-    }
-    .fab:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(37,99,235,.18); border-color:#bfdbfe}
-    .fab.brand{background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); border-color: transparent; color:#fff}
-    .fab .tooltip{
-      position:absolute; bottom:58px; transform: translateX(-50%); left:50%;
-      background:#0f172a; color:#fff; font-size:.8rem; padding:6px 8px; border-radius:10px; opacity:0; pointer-events:none; transition: opacity .15s var(--ease)
-    }
-    [data-theme="dark"] .fab .tooltip{background:#000}
-    .fab:hover .tooltip{opacity:.9}
-    .fab:active::after{
-      content:""; position:absolute; inset:0;
-      background:radial-gradient(140px 140px at var(--x,50%) var(--y,50%), rgba(96,165,250,.35), transparent 40%);
-      pointer-events:none;
-    }
-    @media (max-width: 640px){
-      .dock{left:50%; right:auto; transform: translateX(-50%);}
-      .fab span{display:none}
-    }
-
-    @media print{
-      .dock{display:none} .sidebar{display:none} .main{padding:0}
-      .section{box-shadow:none; page-break-inside: avoid}
-      a{color:#000; text-decoration:none} body{background:#fff}
-    }
-
-    /* ===== Justify main content text ===== */
-    .section p,
-    .section .callout,
-    .section .sum,
-    .section .sumbox p,
-    .section .card p,
-    .section .bullets,
-    .section .bullets li,
-    details.pub p,
-    details.pub .meta + p {
-      text-align: justify;
-      text-justify: inter-word;
-      -webkit-hyphens: auto;
-      -ms-hyphens: auto;
-      hyphens: auto;
-    }
-    /* Keep UI elements not justified */
-    .slogan,
-    .meta,
-    .kbd,
-    .btn,
-    .tab,
-    .chip {
-      text-align: initial;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milad Mohammadrezaei | Academic CV</title>
+<meta name="description" content="Academic CV of Milad Mohammadrezaei: battery diagnostics, lithium-ion battery health estimation, power electronics, research, publications and teaching.">
+<style>
+:root{color-scheme:light;--navy:#132e48;--ink:#182b3b;--muted:#536777;--line:#dce4ea;--blue:#17669a;--paper:#fff;--bg:#f3f6f8}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue);text-underline-offset:3px}a:hover{color:#0c456b}a:focus-visible,summary:focus-visible{outline:3px solid #e2a743;outline-offset:5px}.skip{position:absolute;left:12px;top:-80px}.skip:focus{top:12px;background:white;padding:12px;z-index:10}.container{max-width:1120px;margin:auto;padding:0 32px}.hero{background:var(--navy);color:#fff;padding:62px 0 40px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:#b4d7ec;margin:0 0 15px}h1{font-size:clamp(32px,5vw,54px);line-height:1.12;letter-spacing:-.035em;margin:0 0 14px}.subtitle{font-size:clamp(17px,2.5vw,21px);color:#d7e6ef;max-width:750px;line-height:1.5}.contact{display:flex;gap:9px 22px;flex-wrap:wrap;margin:23px 0 12px}.contact a{color:#fff}.identity{font-size:14px;color:#c3d4df}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.button{display:inline-flex;padding:10px 18px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:650;background:white;color:var(--navy);border:1px solid #fff}.button.secondary{background:transparent;color:white;border-color:#7593a9}.button:hover{background:#dcecf5;color:var(--navy)}.navigation{position:sticky;top:0;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);z-index:2}.nav-inner{display:flex;gap:24px;overflow-x:auto;white-space:nowrap;padding-top:15px;padding-bottom:15px}.nav-inner a{text-decoration:none;font-size:13px;font-weight:650;color:var(--navy)}main{padding-top:32px!important;padding-bottom:50px!important}section{background:white;border:1px solid var(--line);border-radius:9px;padding:30px 34px;margin-bottom:22px;overflow-wrap:anywhere}h2{font-size:23px;line-height:1.35;color:var(--navy);margin:0 0 22px;padding-bottom:13px;border-bottom:2px solid #dcecf5;letter-spacing:-.02em}h3{font-size:16px;line-height:1.5;margin:25px 0 12px;color:var(--navy)}p{margin:0 0 16px}p:last-child{margin-bottom:0}.experience-point{padding-left:18px;position:relative}.experience-point:before{content:"•";position:absolute;left:0;color:var(--blue)}strong{font-weight:650}.reference-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.reference-grid h3{margin-top:0}.reference-grid p{color:var(--muted);margin-bottom:6px}details summary{cursor:pointer;font-weight:650;color:var(--navy)}.pdf-frame{width:100%;height:80vh;min-height:540px;border:1px solid var(--line);margin-top:20px}.pdf-note{color:var(--muted);font-size:14px;margin-top:12px}footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:13px}footer .container{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}@media(max-width:640px){.container{padding-left:18px;padding-right:18px}.hero{padding:40px 0 30px}.contact{flex-direction:column;gap:8px}.navigation .container{gap:20px}section{padding:24px 20px}.reference-grid{grid-template-columns:1fr}.pdf-frame{min-height:420px}h2{font-size:21px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.navigation,.actions,.pdf-section,.skip{display:none}.hero{background:white;color:#000;padding:0}.hero a,.subtitle,.identity,.eyebrow{color:#000}.container{max-width:none;padding:0}body{background:white;font-size:10pt}section{border:0;padding:15px 0;margin:0}h2,h3{break-after:avoid}p{orphans:3;widows:3}.reference-grid{break-inside:avoid}footer{display:none}}
+</style>
 </head>
-<body class="bg-dots" data-theme="light" data-palette="ocean">
-  <div class="layout">
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="avatar" title="Google Scholar photo">
-          <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=4nlG_hYAAAAJ" alt="Scholar Photo" onerror="this.style.display='none'; this.parentElement.textContent='MM'">
-        </div>
-        <div>
-          <h1 class="name">Milad Mohammadrezaei</h1>
-          <div class="role">Ph.D. — Power Electronics</div>
-        </div>
-      </div>
-
-      <nav class="nav" id="sidenav">
-        <a class="tab active" href="#profile"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
-        <a class="tab" href="#education"><i class="fa-solid fa-graduation-cap"></i> <span>Education</span></a>
-        <a class="tab" href="#publications"><i class="fa-regular fa-file-lines"></i> <span>Publications</span></a>
-        <a class="tab" href="#research-teaching"><i class="fa-solid fa-chalkboard-user"></i> <span>Research & Teaching</span></a>
-        <a class="tab" href="#industry"><i class="fa-solid fa-industry"></i> <span>Industry</span></a>
-        <a class="tab" href="#honors"><i class="fa-solid fa-medal"></i> <span>Honors</span></a>
-        <a class="tab" href="#skills"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Skills</span></a>
-        <a class="tab" href="#references"><i class="fa-solid fa-people-group"></i> <span>References</span></a>
-      </nav>
-
-      <div class="side-sec">
-        <h3>Research Interests</h3>
-        <div class="chips">
-          <span class="chip">Battery SoH/SoC</span><span class="chip">ML & Diagnostics</span>
-          <span class="chip">Converter Reliability</span><span class="chip">Bidirectional DC–DC</span>
-          <span class="chip">Thermal Modeling</span><span class="chip">EV Charging / Grid-tied</span>
-        </div>
-      </div>
-
-      <div class="side-sec">
-        <h3>Accent Palette</h3>
-        <div class="palette">
-          <div class="swatch" data-p="classic" title="Classic"></div>
-          <div class="swatch active" data-p="ocean" title="Ocean"></div>
-          <div class="swatch" data-p="aurora" title="Aurora"></div>
-          <div class="swatch" data-p="solar" title="Solar"></div>
-        </div>
-      </div>
-
-      <div class="foot-note">© <span id="y"></span> Milad Mohammadrezaei</div>
-    </aside>
-
-    <!-- ===== MAIN ===== -->
-    <main class="main">
-      <!-- Profile -->
-      <section class="section" id="profile" data-accent>
-        <h2><i class="fa-solid fa-user-astronaut" style="color:var(--accent-profile)"></i> Profile</h2>
-        <p class="slogan">
-          While being an early-career Ph.D. researcher in Electrical Engineering, I have built strong expertise in multidisciplinary subjects spanning batteries, power electronics, and signal processing for battery data, along with strong hands-on skills. My track record includes versatile academic skills, from scientific publication and teaching to supervision, industry collaboration, and peer review activities. My Ph.D./M.Sc. research focused mainly on lithium-ion battery health estimation and power converter reliability, which has led to benchmark publications in IEEE Transactions on Transportation Electrification (IF~9). In teaching, I have delivered ~800 lecture hours in several B.Sc. courses, including being a laboratory supervisor and co-supervising multiple student projects at the B.Sc./M.Sc. levels. Besides exploring low-TRL ideas as a researcher, I have passionately contributed to high-TRL projects as an engineer and, most recently, as head of R&D at Niak Energy. In this role, I have led engineering design & development of grid-tied and off-grid inverters (~ 25kW), EV chargers (~ 7kW AC and ~100 kW DC), and hybrid storage systems (>5 kWh) up to a TRL 8. Throughout these projects, I have also gained extensive experience in embedded software design based on DSP/FPGA architecture. This combination of multidisciplinary experience in low-to-high-TRL research projects on batteries and power electronics, along with hands-on expertise in embedded systems design, ensures iBattScan success and scalability.
-        </p>
-        <div class="callout"><strong>Highlights:</strong> feature engineering for generic SoH models, correlation-based EV diagnostics, thermal-aware converter design.</div>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Education -->
-      <section class="section" id="education" data-accent>
-        <h2><i class="fa-solid fa-graduation-cap" style="color:var(--accent-edu)"></i> Education</h2>
-
-        <div class="card">
-          <h3>Ph.D., Electrical Engineering (Power Electronics)</h3>
-          <div class="meta">Isfahan University of Technology • 2018–2024</div>
-          <ul class="bullets">
-            <li>GPA: 18.13/20</li><li>Thesis: Physical Features Extraction for Online SoH Estimation of Li-ion Batteries (Data-Driven)</li>
-            <li>Supervisors: Dr. A. Tabesh, Dr. Z. Maleki • Advisor: Dr. S. A. Khajehoddin</li>
-          </ul>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="phd">Abstract</button>
-            <p class="sum" data-sum="phd" style="display:none">The expansion of electrical energy storage technologies has gained significant attention over the past two decades due to their fundamental role in enabling the large-scale integration of renewable energy sources, enhancing the resilience of power grids against natural disasters and cyberattacks, and supporting the transition to electric and hybrid transportation systems. In recent years, high-capacity lithium-ion batteries have attracted particular interest in applications such as electric vehicles and microgrids, owing to their competitive advantages including high energy and power density as well as long cycle life. Optimal utilization of these batteries throughout their service life, whether through redeployment in secondary applications or timely replacement before critical failures occur, requires accurate state-of-health (SOH) estimation and reliable prediction of the remaining useful life (RUL). Methods employed for SOH estimation must achieve sufficient accuracy, as premature replacement of high-capacity batteries is not economically feasible due to their high capital cost, while delayed replacement may result in severe consequences for the control and stability of storage-integrated microgrids. This dissertation proposes a data-driven framework for SOH diagnosis of lithium-ion batteries, enabling online prediction of battery health across different sizes and capacities by extracting normalized, dimensionless features. The primary innovation of the proposed method lies in defining and extracting such normalized features, which serve as universal inputs for data-driven models and are particularly valuable given the challenges associated with acquiring suitable datasets for high-capacity batteries. In addition, an analytical SOH estimation approach based on an electrochemical model is presented, where model parameters are iteratively updated using online measurements of battery voltage and current through a least-squares minimization scheme. Unlike conventional approaches, both methods developed in this dissertation are designed for online implementation and maintain accuracy under partial charge–discharge cycling conditions. The proposed methodologies exploit shared electrochemical properties of lithium-ion batteries to reduce the influence of capacity and size on extracted features, thereby enabling the development of a generalized online SOH estimation model transferable across various lithium-ion battery types. Validation with benchmark datasets from NASA, the University of Maryland, and the University of Oxford demonstrates that the proposed method achieves a mean error of approximately 3.5% in lifetime prediction, representing a substantial improvement over existing methods with errors exceeding 13%.</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>M.Sc., Electrical Engineering (Power Systems)</h3>
-          <div class="meta">Isfahan University of Technology • 2016–2018</div>
-          <ul class="bullets">
-            <li>GPA: 17.5/20</li>
-            <li>Thesis: Techno-economic Study of Collector Systems for Buoy Wave Energy Harvesters (Persian Gulf)</li>
-          </ul>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="msc">Abstract</button>
-            <p class="sum" data-sum="msc" style="display:none">Wave energy is among promising source of renewable energies Compare to wind and solar power waveenergy provides energy with higher power density Despite solar energy wave energy can be harvestedduring all day long So far various techniques are presented for wave energy harvesting a part of thesetechniques use the swing movement of the waves and others use wave turbines to produce energy The waveenergy harvesters are conventionally in the range of several hundred kilowatts and often tens or hundreds ofwave energy harvesters are connected together through a collector system to form a wave power plant Thewave energy harvesters can be interconnected via various collector systems including direct current dc andalternative current ac systems where can be connected in series parallel series parallel and other types ofinterconnection configurations As overhead power lines cannot be used in seas the main advantage of dccollectors over the ac counterpart is the elimination of charging current that is particularly in underwatercables due to its notable capacitive feature However as the captured power from sea waves shouldeventually be injected into an ac power system the use of high power electronic converters is inevitable Theuse of high power converters forces technical and reliability issues In order to select the appropriate collector system considering the charging current limitation in the acsystems and the limitation of use high power converters in dc systems in this thesis dc collector systems arecompared from the point of view of maximum energy delivered to grid and farm costs In order to evaluatethe systems from the point of view of the energy delivered to the grid and the final cost the improvedlevelized cost of energy ILCOE index is introduced for wave power plants and used In order to take intoaccount the not supplied expected energy due to a failure the reliability calculation of the system is performand its impacts on the levelized cost of energy is appropriately modeled Using this idea a method isproposed that can be used to select the suitable collector system configuration for wave power plants Toverify the validity of the proposed method the data of a power plant in California for 3 15 and 29 megawattcapacities are used Then the final cost of wave generated energy for a system with ac collector is calculatedand compared with the existing results The results of the design based on the ILCOE index indicate thatincreasing the inverter capacity to reduce investment costs does not necessarily lead to a reduction in the finalenergy cost Then for the design of the power plant in Iran s coasts data from the Iran Ports Organizationand Subsea Research and Development center at Isfahan University of Technology are used for three ports inIran Anzali Bushehr and Chabahar Using the suggested design methodology shows that Chabahar port isthe most suitable ports in Iran for the implementation of a wave power plants It is also shown that thesuitable collector configuration is a parallel dc system with an inverter power range from 80 up to 150kilowatts KeywordsRenewable energies Wave energy conversion systems Buoy wave energy harvesters Improved Levelized cost of energy Markov model Iran ports Reliability.</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>B.Sc., Electrical Engineering</h3>
-          <div class="meta">Isfahan University • 2012–2016</div>
-          <ul class="bullets">
-            <li>GPA: 15.36/20</li><li>Thesis: Control Algorithms in Wind–Solar Hybrid Systems</li>
-          </ul>
-        </div>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Publications -->
-      <section class="section" id="publications" data-accent>
-        <h2><i class="fa-regular fa-file-lines" style="color:var(--accent-pub)"></i> Publications</h2>
-        <div class="toolbar">
-          <button class="btn" id="expandAll"><i class="fa-solid fa-plus"></i> Expand all</button>
-          <button class="btn" id="collapseAll"><i class="fa-solid fa-minus"></i> Collapse all</button>
-        </div>
-
-        <details class="pub">
-          <summary>
-            <div>
-              <div class="p-title">A Correlation-based Method for the Estimation of the SoH of Lithium Batteries in EVs</div>
-              <div class="p-where">Energy Engineering and Management</div>
-            </div>
-            <div class="p-year">2025</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh</div>
-          <p class="meta">Correlation-based, data-driven SoH estimation tailored to EV usage.</p>
-          <span class="kbd">peer-reviewed</span>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="pub1">Abstract</button>
-            <p class="sum" data-sum="pub1" style="display:none">This paper presents a correlation-based framework for feature selection to estimate the lithium batteries state of health (SoH) using data-driven methods. These features can be calculated online for partial charge/discharge (C/D) cycles in electric vehicles. The main contribution is to provide a framework to determine a subset of independent features with maximum impacts on SoH estimation. Despite statistical features, the selected features are independent of C/D profiles, without requiring a full cycle information. Using the correlation criterion reduces the computational burden in a data-driven model as required in an online battery health estimation method. Extracting features, considering battery electrochemical reactions, and reducing the number of selected features, using the suggested correlation criterion, increase the robustness of the model and avoid overfitting. NASA labeled battery aging dataset is used to evaluate the performance of the method under various partial and random C/D cycles. The results show that the correlation-based features in Gaussian data-driven model can estimate the battery SoH with an average error of 10% under random patterns in a partial C/D cycle.</p>
-          </div>
-        </details>
-
-        <details class="pub">
-          <summary>
-            <div>
-              <div class="p-title">A Framework for Normalizing Physical Features of Li-ion Batteries</div>
-              <div class="p-where">IEEE Transactions on Transportation Electrification</div>
-            </div>
-            <div class="p-year">2024</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh, S. A. Khajehoddin</div>
-          <p class="meta">Feature normalization enabling generic SoH models across cells/packs.</p>
-          <span class="kbd">peer-reviewed</span>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="pub2">Abstract</button>
-            <p class="sum" data-sum="pub2" style="display:none">This article presents a framework for health estimation of a Li-ion battery that is conceptually formed based on dimensionless and common physical characteristics of a Li-ion battery. The proposed normalized features and framework enable the formation of a data-driven model to be trained using an available dataset and applied to estimate the state of health (SoH) of another Li-ion battery. It is established based on introducing the new concepts of participation factors and normalized dimensionless features which are independent of a battery capacity and its dimensions. Effective training of a model using a conventional data-driven approach needs an enriched dataset that is not readily available, particularly in high-power and custom-made battery energy storage applications. The reason is that data generation needs time-consuming and expensive lifespan experiments using several samples of Li-ion batteries. To evaluate the performance of the proposed framework, four widely used Li-ion battery datasets with different capacities and dimensions are selected and compared with conventional z -score and min-max normalization methods. Test results show that the average error using the proposed method in the early stage of battery lifespan is 3.5% that is 10% less than the error in existing methods.</p>
-          </div>
-        </details>
-
-        <details class="pub">
-          <summary>
-            <div>
-              <div class="p-title">Correlation-based Data-Driven SoH Estimation in EVs</div>
-              <div class="p-where">Energy Engineering and Management</div>
-            </div>
-            <div class="p-year">2024</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, Z. Maleki, A. Tabesh</div>
-          <p class="meta">Field-like profiles; correlation features for practical SoH diagnostics.</p>
-          <span class="kbd">peer-reviewed</span>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="pub3">Abstract</button>
-            <p class="sum" data-sum="pub3" style="display:none">This paper presents a correlation-based framework for feature selection to estimate the lithium batteries state of health (SoH) using data-driven methods. These features can be calculated online for partial charge/discharge (C/D) cycles in electric vehicles. The main contribution is to provide a framework to determine a subset of independent features with maximum impacts on SoH estimation. Despite statistical features, the selected features are independent of C/D profiles, without requiring a full cycle information. Using the correlation criterion reduces the computational burden in a data-driven model as required in an online battery health estimation method. Extracting features, considering battery electrochemical reactions, and reducing the number of selected features, using the suggested correlation criterion, increase the robustness of the model and avoid overfitting. NASA labeled battery aging dataset is used to evaluate the performance of the method under various partial and random C/D cycles. The results show that the correlation-based features in Gaussian data-driven model can estimate the battery SoH with an average error of 10% under random patterns in a partial C/D cycle.</p>
-          </div>
-        </details>
-
-        <h3 style="margin-top:8px">Under Review / In Preparation</h3>
-
-        <details class="pub">
-          <summary>
-            <div><div class="p-title">Physic-based Feature Extraction for SoH with Partial Patterns</div>
-              <div class="p-where">under review — IEEE Transactions on Intelligent Vehicles</div></div>
-            <div class="p-year">2025</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, Z. Maleki, S. A. Khajehoddin</div>
-          <div class="sumbox">
-            <button class="chip summary-toggle" data-target="pub4">Abstract</button>
-            <p class="sum" data-sum="pub4" style="display:none">Physics-guided features resilient to partial charging/discharging data gaps for SoH estimation.</p>
-          </div>
-        </details>
-
-        <details class="pub">
-          <summary>
-            <div><div class="p-title">Online Simultaneous Estimation of SoH and Internal Parameters</div>
-              <div class="p-where">under review — IEEE Transactions on Transportation Electrification</div></div>
-            <div class="p-year">2025</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, Z. Maleki, S. A. Khajehoddin</div>
-        </details>
-
-        <details class="pub">
-          <summary>
-            <div><div class="p-title">Fully Soft-Switched High Step-up/Down Bidirectional Buck–Boost Converter</div>
-              <div class="p-where">ready for submission — IEEE Transactions on Industrial Electronics</div></div>
-            <div class="p-year">2025</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, H. Farzanehfard</div>
-        </details>
-
-        <details class="pub">
-          <summary>
-            <div><div class="p-title">Designing the Best Configuration for Wave Point Absorber Farms</div>
-              <div class="p-where">in preparation</div></div>
-            <div class="p-year">—</div>
-          </summary>
-          <div class="divider"></div>
-          <div class="meta">Authors: <strong>M. Mohammadrezaei</strong>, A. Tabesh, A. Zamani</div>
-        </details>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Research & Teaching -->
-      <section class="section" id="research-teaching" data-accent>
-        <h2><i class="fa-solid fa-chalkboard-user" style="color:var(--accent-re)"></i> Research & Teaching</h2>
-        <div class="card">
-          <h3>Research Assistant <span class="meta">• 2024–Now</span></h3>
-          <div class="meta">Isfahan University of Technology</div>
-          <ul class="bullets"><li>DC–DC converters (Prof. H. Farzanehfard); loss models & soft-switching guidelines.</li></ul>
-        </div>
-        <div class="card">
-          <h3>University Lecturer <span class="meta">• 2018–2024</span></h3>
-          <div class="meta">Isfahan University of Technology; Isfahan University</div>
-          <ul class="bullets"><li>Taught Fundamentals of EE, Electrical Circuits; exam & problem-set design.</li></ul>
-        </div>
-        <div class="card">
-          <h3>Lab Instructor <span class="meta">• 2018–2023</span></h3>
-          <div class="meta">Isfahan University of Technology</div>
-          <ul class="bullets"><li>Electrical Machines Lab (&gt;50 students/year); lab manuals; safety standards.</li></ul>
-        </div>
-        <div class="card">
-          <h3>Teaching Assistant <span class="meta">• 2017–2020</span></h3>
-          <div class="meta">Isfahan University of Technology</div>
-          <ul class="bullets"><li>Electrical Machines I/II (Dr. Tabesh, Dr. Golsorkhi, Dr. Hajian); recitations, grading.</li></ul>
-        </div>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Industry -->
-      <section class="section" id="industry" data-accent>
-        <h2><i class="fa-solid fa-industry" style="color:var(--accent-ind)"></i> Industry</h2>
-        <div class="card">
-          <h3>Head of R&D <span class="meta">• 2022–Now</span></h3>
-          <div class="meta">Niak Energy Golsar</div>
-          <ul class="bullets">
-            <li>Designed <strong>5 kW grid-tied inverter</strong> (HERIC, PLL, MPPT); product localization & certification.</li>
-            <li>Led <strong>25 kW three-phase T-type inverter</strong>; validation and compliance.</li>
-            <li>ML-based <strong>battery monitoring app</strong> for safety diagnostics.</li>
-            <li>Thermal analysis (MATLAB/COMSOL) for portable PV systems.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>R&D Engineer <span class="meta">• 2021–2022</span></h3>
-          <div class="meta">Golnoor</div>
-          <ul class="bullets"><li><strong>1 kW off-grid inverter</strong> (H-bridge, MPPT, boost) with closed-loop control; prototype → pilot.</li></ul>
-        </div>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Honors -->
-      <section class="section" id="honors" data-accent>
-        <h2><i class="fa-solid fa-medal" style="color:var(--accent-hon)"></i> Honors & Awards</h2>
-        <ul class="bullets" style="margin:0">
-          <li>Direct Ph.D. admission as reward for Master’s rank (2018)</li>
-          <li><strong>1st</strong> among 40,000 — National Ph.D. Entrance Exam (2018)</li>
-          <li><strong>82nd</strong> among 50,000 — National M.Sc. Entrance Exam (2016)</li>
-          <li>Top 5% — National University Entrance (Konkour, 2012)</li>
-        </ul>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- Skills -->
-      <section class="section" id="skills" data-accent>
-        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent-skill)"></i> Skills</h2>
-        <p style="margin:0">
-          <strong>Programming:</strong> MATLAB; ARM/AVR/Arduino; DSP; Python (familiar); Verilog/FPGA (familiar); PSpice (familiar).<br/>
-          <strong>Simulation:</strong> Simulink; PSIM; COMSOL Multiphysics.<br/>
-          <strong>Writing & Presentation:</strong> LaTeX; MS Word, Visio, Excel, PowerPoint.<br/>
-          <strong>Languages:</strong> Persian (Native); English (Fluent).
-        </p>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <!-- References -->
-      <section class="section" id="references" data-accent>
-        <h2><i class="fa-solid fa-people-group" style="color:var(--accent-ref)"></i> References</h2>
-        <ul class="bullets" style="margin:0">
-          <li>Dr. Ahmadreza Tabesh — Isfahan University of Technology. <a href="https://tabesh.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. Zeinab Maleki — Isfahan University of Technology. <a href="https://zmaleki.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. S. A. Khajehoddin — University of Alberta. <a href="http://www.ece.ualberta.ca/~khajeddi" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. Ahmadreza Zamani — Isfahan University of Technology. <a href="https://zamani.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. Hosein Farzanehfard — Isfahan University of Technology. <a href="https://farzanehfard.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-          <li>Dr. Masood Hajian — Isfahan University of Technology. <a href="https://hajian.iut.ac.ir" target="_blank" rel="noopener">web</a></li>
-        </ul>
-        <div class="progress" aria-hidden="true"></div>
-      </section>
-
-      <section class="section" style="text-align:center;background:transparent;border-color:transparent;box-shadow:none">
-        <span class="meta">© <span id="y"></span> Milad Mohammadrezaei — Academic CV</span>
-      </section>
-    </main>
-  </div>
-
-  <!-- ===== Floating Command Dock ===== -->
-  <div class="dock" aria-label="Quick Actions">
-    <a class="fab brand" href="mailto:m.mohammadrezaei@alumni.iut.ac.ir" title="Email (E)">
-      <i class="fa-solid fa-paper-plane"></i><span>Email</span>
-      <span class="tooltip">E</span>
-    </a>
-    <a class="fab" href="#publications" title="Publications (U)">
-      <i class="fa-regular fa-file-lines"></i><span>Pubs</span>
-      <span class="tooltip">U</span>
-    </a>
-    <button class="fab" id="dockTheme" title="Light/Dark (T)">
-      <i class="fa-solid fa-sun"></i><span>Theme</span>
-      <span class="tooltip">T</span>
-    </button>
-    <button class="fab" id="dockPDF" title="Download PDF (P)">
-      <i class="fa-solid fa-file-arrow-down"></i><span>PDF</span>
-      <span class="tooltip">P</span>
-    </button>
-    <a class="fab" href="https://scholar.google.com/citations?user=4nlG_hYAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener" title="Google Scholar (G)">
-      <i class="fa-brands fa-google"></i><span>Scholar</span>
-      <span class="tooltip">G</span>
-    </a>
-    <a class="fab" href="https://www.linkedin.com/in/milad-mohammadrezaei-04255917a" target="_blank" rel="noopener" title="LinkedIn (L)">
-      <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span>
-      <span class="tooltip">L</span>
-    </a>
-  </div>
-
-  <script>
-    const root = document.body;
-
-    // ===== Restore saved theme/palette =====
-    const savedTheme = localStorage.getItem('theme');
-    const savedPalette = localStorage.getItem('palette');
-    if (savedTheme) root.setAttribute('data-theme', savedTheme);
-    if (savedPalette) root.setAttribute('data-palette', savedPalette);
-
-    // Highlight active swatch on load
-    function setActiveSwatch(p) {
-      document.querySelectorAll('.swatch').forEach(sw => {
-        sw.classList.toggle('active', sw.getAttribute('data-p') === p);
-      });
-    }
-    setActiveSwatch(root.getAttribute('data-palette') || 'ocean');
-
-    // ===== Theme toggle (dock) =====
-    const dockTheme = document.getElementById('dockTheme');
-    function toggleTheme(e){
-      const cur = root.getAttribute('data-theme') || 'light';
-      const next = cur === 'dark' ? 'light' : 'dark';
-      if(e){
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - rect.left)/rect.width)*100;
-        const y = ((e.clientY - rect.top)/rect.height)*100;
-        e.currentTarget.style.setProperty('--x', x+'%'); e.currentTarget.style.setProperty('--y', y+'%');
-      }
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      const icon = next === 'light' ? 'fa-sun' : 'fa-moon';
-      dockTheme.innerHTML = `<i class="fa-solid ${icon}"></i><span>Theme</span><span class="tooltip">T</span>`;
-    }
-    dockTheme.addEventListener('click', toggleTheme);
-
-    // Ripple coords for all fabs
-    document.querySelectorAll('.fab').forEach(f=>{
-      f.addEventListener('pointerdown', (e)=>{
-        const rect = f.getBoundingClientRect();
-        const x = ((e.clientX - rect.left)/rect.width)*100;
-        const y = ((e.clientY - rect.top)/rect.height)*100;
-        f.style.setProperty('--x', x+'%'); f.style.setProperty('--y', y+'%');
-      });
-    });
-
-    // Print / PDF
-    document.getElementById('dockPDF').addEventListener('click', ()=> window.print());
-
-    // ===== Palette switch (persists) =====
-    document.querySelectorAll('.swatch').forEach(s => {
-      s.addEventListener('click', ()=>{
-        const p = s.getAttribute('data-p');
-        root.setAttribute('data-palette', p);
-        localStorage.setItem('palette', p);
-        setActiveSwatch(p);
-      });
-    });
-
-    // ScrollSpy + progress bars
-    const ids = ['profile','education','publications','research-teaching','industry','honors','skills','references'];
-    const sections = ids.map(id => ({id, el: document.getElementById(id)}));
-    const tabs = Array.from(document.querySelectorAll('.tab'));
-    const prog = new Map(ids.map(id => [id, document.querySelector(`#${id} .progress`)]));
-
-    function markActive(){
-      let top = window.scrollY + 140;
-      let cur = sections[0].id;
-      for (const s of sections){ if(s.el && s.el.offsetTop <= top) cur = s.id; }
-      tabs.forEach(t => t.classList.toggle('active', t.getAttribute('href') === '#'+cur));
-    }
-    function updateProgress(){
-      const vh = window.innerHeight;
-      sections.forEach(({id, el})=>{
-        const p = prog.get(id); if(!p) return;
-        const rect = el.getBoundingClientRect();
-        const ratio = rect.height ? Math.min(1, Math.max(0, (vh - rect.top) / (rect.height + vh))) : 0;
-        p.style.width = (ratio*100).toFixed(1) + '%';
-        p.style.opacity = (rect.top < vh && rect.bottom > 0) ? 1 : 0;
-      });
-    }
-    document.addEventListener('scroll', ()=>{ markActive(); updateProgress(); }, {passive:true});
-    window.addEventListener('load', ()=>{
-      markActive(); updateProgress(); document.getElementById('y').textContent = new Date().getFullYear();
-    });
-
-    // Publications expand/collapse all
-    const expandAll = document.getElementById('expandAll');
-    const collapseAll = document.getElementById('collapseAll');
-    const pubs = () => Array.from(document.querySelectorAll('details.pub'));
-    if (expandAll) expandAll.addEventListener('click', ()=> pubs().forEach(d => d.open = true));
-    if (collapseAll) collapseAll.addEventListener('click', ()=> pubs().forEach(d => d.open = false));
-
-    // Summary toggles
-    document.querySelectorAll('.summary-toggle').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const target = btn.getAttribute('data-target');
-        const el = document.querySelector(`.sum[data-sum="${target}"]`);
-        if(!el) return;
-        const show = el.style.display === 'none' || el.style.display === '';
-        el.style.display = show ? 'block' : 'none';
-        btn.textContent = show ? 'Hide abstract' : 'Abstract';
-        btn.classList.toggle('active', show);
-      });
-    });
-
-    // Keyboard shortcuts: T (theme), P (pdf), G (scholar), L (LinkedIn), E (email), U (publications)
-    document.addEventListener('keydown', (e)=>{
-      if (['INPUT','TEXTAREA'].includes((e.target.tagName||'').toUpperCase())) return;
-      const k = e.key.toLowerCase();
-      if (k==='t'){ toggleTheme(e); }
-      else if (k==='p'){ window.print(); }
-      else if (k==='g'){ window.open('https://scholar.google.com/citations?user=4nlG_hYAAAAJ&hl=en&oi=ao','_blank'); }
-      else if (k==='l'){ window.open('https://www.linkedin.com/in/milad-mohammadrezaei-04255917a','_blank'); }
-      else if (k==='e'){ window.location.href='mailto:m.mohammadrezaei@alumni.iut.ac.ir'; }
-      else if (k==='u'){ document.querySelector('a[href="#publications"]').click(); }
-    });
-  </script>
-</body>
-</html>
+<body>
+<a class="skip" href="#profile">Skip to CV</a>
+<header class="hero"><div class="container">
+<p class="eyebrow">Academic Curriculum Vitae</p>
+<h1>Milad Mohammadrezaei</h1>
+<p class="subtitle">Battery Diagnostics and Power Electronics Researcher</p>
+<div class="contact"><a href="mailto:miladmohammadrezaeii@gmail.com">miladmohammadrezaeii@gmail.com</a><a href="tel:+989134844336">(+98) 913 484 4336</a><span>Isfahan, Iran</span><a href="https://linkedin.com/in/milad-mohammadrezaei">LinkedIn</a><a href="https://orcid.org/0009-0008-1877-414X">ORCID: 0009-0008-1877-414X</a></div>
+<p class="identity">Full name: Milad Mohammadrezaeikalehmasihi</p>
+<div class="actions"><a class="button" href="miladmohammadrezaei-CV-academic.pdf" download>Download CV (PDF)</a><a class="button secondary" href="miladmohammadrezaei-CV-academic.pdf" target="_blank" rel="noopener">Open PDF</a><a class="button secondary" href="#pdf">View PDF on this page</a></div>
+</div></header>
+<nav class="navigation" aria-label="CV sections"><div class="container nav-inner"><a href="#profile">Profile</a><a href="#education">Education</a><a href="#battery-research">Research</a><a href="#publications">Publications</a><a href="#industry">Experience</a><a href="#teaching">Teaching</a><a href="#skills">Skills</a><a href="#references">References</a></div></nav>
+<main class="container"><section id="profile"><h2>Research Profile</h2><p>Power electronics researcher with a Ph.D. and experience in lithium-ion battery health estimation, signal processing, and embedded systems. Research focuses on health indicators from partial charge/discharge data, transferable feature normalization, and online battery-parameter estimation. Head of R&amp;D at Niak Energy Golsar, with hands-on development of DSP-controlled grid-connected inverters and a physics-informed machine-learning digital twin for fault prediction; inverter, EV-charger, and hybrid-storage products have reached TRL 8. Academic experience includes more than 800 hours of classroom teaching and B.Sc./M.Sc. mentoring. Recipient of the European Commission Seal of Excellence for the 2025 MSCA-PF proposal iBattScan (96/100); collaborating with Dr. Farshid Naseri on battery-health estimation.</p></section>
+<section id="education"><h2>Education</h2><p>Isfahan University of Technology Isfahan, Iran Ph.D. in Power Electronics, GPA: 18.13/20; summa cum laude Sep 2018–Mar 2024 Dissertation: Physical Features Extraction for Online SoH Estimation of Lithium-Ion Batteries Based on Data-Driven Methods Supervisor: Prof. Ahmadreza Tabesh; Co-supervisor: Dr. Zeinab Maleki; International advisor: Dr. S. A. Khajehoddin (University of Alberta)</p>
+<p>Isfahan University of Technology Isfahan, Iran M.Sc. in Power Systems, GPA: 17.50/20; summa cum laude Sep 2016–Aug 2018 Thesis: Techno-Economic Study of Collector Systems for Buoy Wave Energy Harvesters in the Persian Gulf Supervisor: Prof. Ahmadreza Tabesh; Co-advisor: Dr. A. Zamani</p>
+<p>University of Isfahan Isfahan, Iran B.Sc. in Electrical Engineering, GPA: 15.36/20 Sep 2012–Sep 2016 Project: Control Algorithms in Wind–Solar Hybrid Systems Supervisor: Dr. Hamidreza Kofigar</p></section>
+<section id="interests"><h2>Research Interests</h2><p><strong>Battery Systems:</strong> Battery energy storage; SoH/SoC estimation; diagnostics from partial operating data; transferable health models; dynamic and relaxation features.</p>
+<p><strong>Control and Signals:</strong> System identification; advanced signal processing; battery-parameter estimation; physics-informed ML and digital twins for fault prediction.</p>
+<p><strong>Power Electronics:</strong> Grid-connected inverters; high-efficiency converters; DSP-based embedded control; hardware-in-the-loop prototyping.</p>
+<p><strong>Research Direction:</strong> Physical and electrochemical mechanisms of battery ageing; root-cause degradation diagnostics for next-generation battery management systems.</p></section>
+<section id="battery-research"><h2>Lithium-Ion Battery Research</h2><p><strong>Health Estimation from Partial Operating Data:</strong> Developed physical health-feature extraction and selection methods for partial charge/discharge profiles, addressing battery operation without complete cycles. Evaluated the approach using the NASA Random Walk datasets with irregular operating profiles.</p>
+<p><strong>Transferable Online Health Estimation:</strong> Developed a framework that learns from other batteries to estimate the health of a battery without its own ageing dataset. Identified shared physical characteristics and normalized battery-specific differences to improve model transferability across cells and capacities. Evaluated the framework on NASA Random Walk, Oxford Battery, and CALCE CS2 and CX2 datasets; published in IEEE Transactions on Transportation Electrification (2024).</p>
+<p><strong>SoC–OCV Analysis and Parameter Estimation:</strong> Investigated changes in the state-of-charge–open-circuit-voltage (SoC–OCV) curve over battery lifetime. Developed an optimization algorithm for simultaneous estimation of internal parameters and state of health during ageing, and evaluated it using partial NASA battery data.</p>
+<p><strong>Dynamic and Relaxation Features:</strong> Investigated battery-health and lifetime estimation using relaxation and dynamic-response features. Collaborated with Dr. Farshid Naseri on fusion of ageing features from dynamic and rest conditions, resulting in an accepted IECON 2026 paper.</p>
+<p><strong>Chemistry-Related Features:</strong> Completed a simulation study using chemistry-related parameters independent of SoC in an ML algorithm for battery lifetime and parameter estimation. Evaluated the method on NASA Random Walk data to reduce dependence on whether operating records contain partial or complete charge/discharge profiles.</p>
+<p><strong>Industrial Battery Monitoring:</strong> Developed MATLAB-based software for monitoring and analysing lead-acid and lithium-ion batteries, and battery-parameter estimation algorithms for an industrial company in Iran. Experience also includes battery-system design and thermal analysis for energy-storage applications.</p></section>
+<section id="skills"><h2>Technical Competencies</h2><p><strong>Battery Diagnostics:</strong> SoH/SoC estimation; partial charge/discharge feature extraction; cross-cell normalization; SoC–OCV analysis; parameter optimization; dynamic and relaxation features; thermal analysis.</p>
+<p><strong>Inverter Control:</strong> Single-phase HERIC inverters; TI TMS320F28066; sinusoidal PWM (SPWM); phase-locked loops (PLL); maximum power point tracking (MPPT); Park transformation; grid power injection.</p>
+<p><strong>ML and Digital Twins:</strong> Physics-informed ML; digital-twin implementation; prediction of current/voltage imbalance, DC-link faults, and fan- and temperature-related faults.</p>
+<p><strong>Embedded Systems:</strong> DSP/FPGA-based systems; ARM/AVR/Arduino; embedded converter control; hardware/software validation.</p>
+<p><strong>Programming:</strong> MATLAB/Simulink, C/C++, Python, DSP programming, LabVIEW; familiarity with Verilog/FPGA and Assembly.</p>
+<p><strong>Simulation and Design:</strong> PSIM, COMSOL Multiphysics, ANSYS Maxwell, PVsyst, LTspice, PLECS, EPLAN.</p>
+<p><strong>Communication:</strong> Modbus RTU/TCP, RS485/RS232, CAN bus, I2C, SPI.</p>
+<p><strong>Research Practice:</strong> Scientific writing with LATEX; experimental protocols; laboratory safety; student mentoring; interdisciplinary R&amp;D coordination.</p></section>
+<section id="publications"><h2>Publications and Research Outputs</h2><h3>Published Peer-Reviewed Journal Articles</h3>
+<p><strong>2025:</strong> M. Mohammadrezaei, Z. Maleki, and A. Tabesh, A Correlation-based Method for the Estimation of the State-of-Health of Lithium Batteries in Electric Vehicles Using Data-Driven Methods, Energy Engineering and Management, vol. 14, no. 2, pp. 2–11, 2025. Contribution: Electrochemically informed feature selection for battery state-of-health estimation.</p>
+<p><strong>2024:</strong> M. Mohammadrezaei, Z. Maleki, A. Tabesh, and S. A. Khajehoddin, A Framework for Normalizing Physical Features of Li-Ion Batteries to Form a Generic Health Estimation Model, IEEE Transactions on Transportation Electrification, vol. 10, no. 3, pp. 6880–6892, 2024. DOI: <a href="https://doi.org/10.1109/TTE.2023.3331529">10.1109/TTE.2023.3331529</a>. Contribution: Capacity- and size-independent physical features for transferring battery SoH models across cells.</p>
+<h3>Accepted Peer-Reviewed Conference Paper</h3>
+<p><strong>2026:</strong> M. Mohammadrezaei and F. Naseri, A Hybrid State-of-Health Estimation Technique for Lithium-Ion Batteries Based on Fusion of Aging Features from Dynamic and Rest Conditions, IECON 2026—52nd Annual Conference of the IEEE Industrial Electronics Society, Doha, Qatar, 18–21 October 2026. [Accepted for presentation] Contribution: Fusion of ageing features from dynamic and rest conditions for battery-health estimation.</p>
+<h3>Published Peer-Reviewed Conference Paper</h3>
+<p><strong>2024:</strong> M. Mohammadrezaei, A. Tabesh, and Z. Maleki, Correlation-Based Methods for Data-Driven Lithium Battery State-of-Health Estimation in Electric Vehicles, International Conference on Energy Engineering and Management, 2024. SID record: <a href="https://www.sid.ir/paper/1539084/fa">1539084</a>. Contribution: Correlation-based selection of interpretable battery-health indicators.</p>
+<h3>Manuscripts Under Review</h3>
+<p><strong>Aug 2026:</strong> M. Mohammadrezaei, A. Tabesh, Z. Maleki, and S. A. Khajehoddin, Online Simultaneous Estimation of SoH and Internal Parameters of Lithium-Ion Batteries Considering the SoC–OCV Curve, IEEE Transactions on Industrial Informatics. [Under review; submitted August 2026]</p>
+<p><strong>Jul 2026:</strong> M. Mohammadrezaei and H. Farzanehfard, Fully Soft-Switched High Step-Up/Down Bidirectional Buck–Boost Converter, IEEE Transactions on Power Electronics. [Under review; submitted July 2026]</p></section>
+<section id="collaboration"><h2>Research Proposals and Collaboration</h2><p><strong>2025 Call:</strong> Horizon Europe MSCA Postdoctoral Fellowships: iBattScan, proposal No. 101285933, with Aalborg University, Denmark. Awarded the European Commission Seal of Excellence, with an evaluation score of 96/100, on the first MSCA-PF submission; not funded.</p>
+<p><strong>Proposed Diagnostics:</strong> Developed an operando electrochemical impedance spectroscopy (EIS) concept for battery-condition assessment in iBattScan, targeting integration with operating energy-storage systems. The concept remains at the proposal stage and has not yet been experimentally implemented.</p>
+<p><strong>2026 Proposal:</strong> Continued refinement of iBattScan for HORIZON-MSCA-2026-PF-01, with Dr. Farshid Naseri as proposed supervisor at Aalborg University. Remote research collaboration has resulted in the accepted IECON 2026 paper listed above.</p></section>
+<section id="industry"><h2>Research and Industry Experience</h2><p>Niak Energy Golsar Isfahan, Iran Head of Research &amp; Development (full-time) Jan 2022–Present</p>
+<p class="experience-point">Designed and built a 5 kW single-phase grid-connected HERIC inverter using the Texas Instruments TMS320F28066 microcontroller.</p>
+<p class="experience-point">Developed the HERIC inverter firmware using sinusoidal pulse-width modulation (SPWM); implemented a phase-locked loop (PLL) for grid synchronization, maximum power point tracking (MPPT), the Park transformation, and control of power injection into the grid.</p>
+<p class="experience-point">Implemented a physics-informed machine-learning digital twin for fault prediction, covering current and voltage imbalances, DC-link faults, and fan- and temperature-related faults.</p>
+<p class="experience-point">Lead development and validation of grid-connected and off-grid inverters, including 25 kW three-phase T-type designs.</p>
+<p class="experience-point">Lead development of 7 kW AC and 100 kW DC EV chargers and hybrid energy-storage systems exceeding 5 kWh; products have reached TRL 8.</p>
+<p class="experience-point">Carry out system design, DSP-based control, battery thermal analysis, hardware/software validation, and development of ML-based battery-monitoring tools.</p>
+<p>Isfahan University of Technology Isfahan, Iran Senior Researcher (part-time) Sep 2024–Sep 2025 Research supervisor: Prof. H. Farzanehfard.</p>
+<p class="experience-point">Developed high-efficiency power-converter topologies, analytical loss models, and soft-switching design guidance for solar and EV applications.</p>
+<p class="experience-point">Mentored two M.Sc. and three B.Sc. projects on DC–DC converters, grid-connected inverters, and lithium-ion battery monitoring.</p>
+<p>Golnoor Isfahan, Iran R&amp;D Engineer (part-time) Nov 2021–Jan 2022</p>
+<p class="experience-point">Designed and built a 1 kW off-grid inverter from prototype to pilot production.</p>
+<p class="experience-point">Contributed to portable PV systems, solar-plant layouts, and Modbus/RS485 monitoring.</p></section>
+<section id="teaching"><h2>Teaching and Student Mentoring</h2><p><strong>Teaching Record:</strong> More than 800 hours of direct classroom teaching across two universities, including preparation of course materials and assessments, grading, and tutorials.</p>
+<p>University of Isfahan Isfahan, Iran Lecturer and Laboratory Instructor (part-time) Sep 2023–Sep 2025 Lectured in Electrical Circuits Theory and Electronics; instructed the Electrical Machines Laboratory for approximately 20 students per semester.</p>
+<p>Isfahan University of Technology Isfahan, Iran Lecturer and Teaching Assistant (part-time) Sep 2018–Mar 2024 Lectured in Fundamentals of Electrical and Electronics Engineering and Electrical Circuits; served as teaching assistant for Electrical Machines I and II.</p>
+<p>Isfahan University of Technology Isfahan, Iran Electrical Machines Laboratory Instructor (part-time) Sep 2018–Sep 2023 Supervised approximately 50 students per semester, prepared laboratory manuals, and enforced standard test procedures and safety practices.</p>
+<h3>Ph.D. Mentoring</h3>
+<p><strong>2018–2023:</strong> Mentored four M.Sc. projects on battery electrochemical impedance spectroscopy (EIS), state-of-charge estimation using an extended Kalman filter, and battery-parameter estimation for EV driving cycles; guided junior students in power-electronics laboratory work.</p></section>
+<section id="honors"><h2>Honors and Awards</h2><p><strong>2025 Call:</strong> European Commission Seal of Excellence, MSCA-PF iBattScan, 96/100.</p>
+<p><strong>2018:</strong> Ranked 1st among approximately 40,000 candidates in Iran’s National Ph.D. Entrance Examination in Electrical Engineering; admitted directly to IUT’s Ph.D. programme based on academic excellence; ranked 3rd in the M.Sc. Power Systems specialization at IUT.</p>
+<p><strong>2016:</strong> Ranked 82nd among approximately 50,000 candidates in Iran’s National M.Sc. Entrance Examination.</p>
+<p><strong>2012:</strong> Placed in the top 5% of Iran’s National University Entrance Examination, among more than 500,000 candidates.</p></section>
+<section id="service"><h2>Academic Service and Memberships</h2><h3>Peer Review</h3>
+<p><strong>Nov 2024–Aug 2026:</strong> Completed 16 verified peer-review reports covering 10 manuscripts for IEEE Transactions on Transportation Electrification, IEEE Transactions on Industrial Electronics, and AUT Journal of Electrical Engineering.</p>
+<p><strong>Web of Science ResearcherID:</strong> LUZ-7277-2024.</p>
+<p><strong>PESI:</strong> Member, Power Electronics Society of Iran, 23 December 2024–10 August 2025.</p>
+<p><strong>IEEE:</strong> Member, Institute of Electrical and Electronics Engineers, 11 February 2023–20 November 2024.</p></section>
+<section id="languages"><h2>Languages and Certification</h2><p><strong>Languages:</strong> Persian (native); English.</p>
+<p><strong>27 Jul 2019:</strong> MSRT English language certificate, Ministry of Science, Research, and Technology.</p></section>
+<section id="references"><h2>Academic References</h2><div class="reference-grid"><article><h3>Dr. Ahmadreza Tabesh</h3><p>Ph.D. and M.Sc. Supervisor<br>Isfahan University of Technology</p><a href="mailto:tabesh@cc.iut.ac.ir">tabesh@cc.iut.ac.ir</a></article><article><h3>Dr. S. A. Khajehoddin</h3><p>International Ph.D. Advisor<br>University of Alberta, Canada</p><a href="mailto:khajeddi@ualberta.ca">khajeddi@ualberta.ca</a></article><article><h3>Dr. Zeinab Maleki</h3><p>Ph.D. Co-supervisor<br>Isfahan University of Technology</p><a href="mailto:zmaleki@cc.iut.ac.ir">zmaleki@cc.iut.ac.ir</a></article><article><h3>Dr. Hosein Farzanehfard</h3><p>Research Supervisor (2024–2025)<br>Isfahan University of Technology</p><a href="mailto:farzaneh@cc.iut.ac.ir">farzaneh@cc.iut.ac.ir</a></article></div></section>
+<section id="pdf" class="pdf-section"><h2>Original Academic CV</h2><details><summary>Show the original five-page PDF</summary><object class="pdf-frame" data="miladmohammadrezaei-CV-academic.pdf" type="application/pdf" aria-label="Academic CV PDF"><p>Your browser cannot display PDFs here. <a href="miladmohammadrezaei-CV-academic.pdf">Open the academic CV PDF</a>.</p></object></details><p class="pdf-note">The original PDF is also available to <a href="miladmohammadrezaei-CV-academic.pdf" download>download</a> or <a href="miladmohammadrezaei-CV-academic.pdf" target="_blank" rel="noopener">open in a separate tab</a>.</p></section>
+</main><footer><div class="container"><span>Milad Mohammadrezaei · Academic CV</span><a href="miladmohammadrezaei-CV-academic.pdf" download>Download the original PDF</a></div></footer>
+</body></html>
